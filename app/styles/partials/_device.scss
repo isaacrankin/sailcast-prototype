@@ -1,0 +1,104 @@
+// Touch devices - relies on Modernizr test on load
+// --------------------------------------------------------------------
+html.touch{
+
+}
+
+// Small width screens
+// --------------------------------------------------------------------
+@media only screen and (max-width: $layout-breakpoint-medium) {
+
+	// For example: Drop to single column layout
+	.row{
+		[class^="col-"],
+		[class*="col-"]{
+			width: 100%;
+		}
+	}
+}
+
+// Medium width screens
+// --------------------------------------------------------------------
+@media only screen and (min-width: $layout-breakpoint-medium) and (max-width: $layout-breakpoint-large) {
+
+}
+
+// Large width screens
+// --------------------------------------------------------------------
+@media only screen and (min-width: $layout-breakpoint-large) {
+
+}
+
+// High resolution devices
+// --------------------------------------------------------------------
+@media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+
+}
+
+// Print styles
+// --------------------------------------------------------------------
+@media print {
+
+	* {
+		background: transparent !important;
+		color: #000 !important;
+		box-shadow: none !important;
+		text-shadow: none !important;
+	}
+
+	a,
+	a:visited {
+		text-decoration: underline;
+	}
+
+	a[href]:after {
+		content: " (" attr(href) ")";
+	}
+
+	abbr[title]:after {
+		content: " (" attr(title) ")";
+	}
+
+	/*
+	 * Don't show links for images, or javascript/internal links
+	 */
+	a[href^="javascript:"]:after,
+	a[href^="#"]:after {
+		content: "";
+	}
+
+	pre,
+	blockquote {
+		border: 1px solid #999;
+		page-break-inside: avoid;
+	}
+
+	thead {
+		display: table-header-group;
+	}
+
+	tr,
+	img {
+		page-break-inside: avoid;
+	}
+
+	img {
+		max-width: 100% !important;
+	}
+
+	@page {
+		margin: 0.5cm;
+	}
+
+	p,
+	h2,
+	h3 {
+		orphans: 3;
+		widows: 3;
+	}
+
+	h2,
+	h3 {
+		page-break-after: avoid;
+	}
+}

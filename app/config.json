@@ -1,0 +1,14 @@
+{
+	"workingPath": "",
+	"outputPath": "../build/",
+	"vendorPath": "vendor/",
+	"vendorFiles": {
+		"styles": ["vendor/normalize-css/normalize.css"],
+		"scripts": ["vendor/jquery/dist/jquery.min.js"]
+	},
+	"workingFiles": {
+		"scripts": ["scripts/plugins.js",
+			"scripts/player.js",
+			"scripts/main.js"]
+	}
+}

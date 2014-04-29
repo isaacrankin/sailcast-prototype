@@ -1,0 +1,9 @@
+{
+  "name": "SailCast",
+  "version": "0.0.1",
+  "dependencies": {
+    "modernizr": "~2.7.1",
+    "jquery": "~1.11",
+    "normalize-css": "~3.0.0"
+  }
+}

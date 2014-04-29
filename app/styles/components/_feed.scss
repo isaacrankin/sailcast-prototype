@@ -1,0 +1,13 @@
+#feed{
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 1em;
+	box-sizing: border-box;
+
+	.feed-item{
+		padding: 1em;
+		margin: 1em 0;
+		border: 1px solid #CCC;
+	}
+}

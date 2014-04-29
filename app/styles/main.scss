@@ -1,0 +1,49 @@
+// Grid settings
+$grid-total-columns: 12;
+$grid-gutter: 1em;
+
+// Layout settings
+$layout-breakpoint-medium: 768px;
+$layout-breakpoint-large: 1024px;
+
+// Colours
+$colour-brand-primary: #F00;
+$colour-brand-secondary: #0F0;
+
+// Fonts
+$colour-font-primary: 'Arial';
+$colour-font-secondary: 'Times';
+
+$sprite-width: 400px;
+$sprite-height: 400px;
+
+// Mixins
+@mixin sprite($x: center, $y:0, $key: "sprite", $width: $sprite-width, $height: $sprite-height) {
+	background-image:url("../images/common/#{$key}.png");
+	background-repeat: no-repeat;
+	background-position:$x $y;
+	background-size:$width $height;
+
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+		background-image:url("../images/common/#{$key}-2x.png");
+	}
+}
+
+@mixin row{
+	width: 100%;
+	float: left;
+	clear: both;
+}
+
+// General styles
+@import "partials/base";
+@import "partials/grid";
+@import "partials/modules";
+
+// Components
+@import "components/layout";
+@import "components/feed";
+@import "components/player";
+
+// Media Queries
+@import "partials/device";

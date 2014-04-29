@@ -1,0 +1,48 @@
+// Base grid
+// --------------------------------------------------------------------
+.row{
+	width: 100%;
+	clear: both;
+
+	[class^="col-"],
+	[class*="col-"]{
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		padding: 0 $grid-gutter;
+		float: left;
+	}
+
+	&.no-padding {
+
+		[class^="col-"],
+		[class*="col-"]{
+			padding: 0;
+		}
+	}
+
+	&.inner-padding{
+
+		[class^="col-"]:first-child,
+		[class*="col-"]:first-child{
+			padding-left: 0;
+		}
+
+		[class^="col-"]:last-child,
+		[class*="col-"]:last-child{
+			padding-right: 0;
+		}
+	}
+}
+
+// Grid calculation for percentages
+@function gridCalc($col-number, $total-columns) {
+	@return percentage(($col-number / $total-columns));
+}
+
+// Creating column classes
+@for $i from 1 through $grid-total-columns {
+	.row .col-#{$i} {
+		width: percentage(($i / $grid-total-columns));
+	}
+}
