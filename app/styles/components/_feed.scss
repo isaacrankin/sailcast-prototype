@@ -4,10 +4,19 @@
 	margin: 0 auto;
 	padding: 1em;
 	box-sizing: border-box;
+}
 
-	.feed-item{
+.feed-item{
+	position: relative;
+	padding: 1em;
+	margin: 1em 0;
+	border: 1px solid #CCC;
+	background-color: #FFF;
+
+	.play-btn{
+		position: absolute;
+		right: 1em;
+		bottom: 1em;
 		padding: 1em;
-		margin: 1em 0;
-		border: 1px solid #CCC;
 	}
 }
