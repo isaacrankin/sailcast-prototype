@@ -242,15 +242,14 @@ module.exports = function(grunt) {
 			}
 		},
 
-		simplemocha: {
-			options: {
-				globals: ['expect'],
-				timeout: 3000,
-				ignoreLeaks: false,
-				ui: 'bdd',
-				reporter: 'tap'
+		// Mocha
+		mocha: {
+			all: {
+				src: ['tests/testrunner.html']
 			},
-			all: { src: ['tests/*.js'] }
+			options: {
+				run: true
+			}
 		}
 	});
 
@@ -258,7 +257,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('default',
 		[
 			'sass',
-			'simplemocha',
+			'mocha',
 			'jshint',
 			'copy',
 			'cssmin',
