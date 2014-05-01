@@ -35,38 +35,74 @@ var FeedItem = function(options){
 
 var processFeed = function(data){
 
-	var entries = data.xmlDocument.getElementsByTagName('item');
+	var _findImage = function(nodes){
 
-	var _findImage = function(){
+		var image = '';
 
-		var img = '';
-
-		// Find an image!?
-		$(entry.childNodes).each(function(index, item){
+		$(nodes).each(function(index, item){
 			if($(item)[0].nodeName === 'itunes:image'){
-				img = $(item)[0].getAttribute('href');
+				image = $(item)[0].getAttribute('href');
 			}
 		});
 
-		return img;
+		return image;
 	};
 
+	/**
+	 * Set channel defaults, maybe overridden by feed item
+	 *
+	 * @param channel
+	 * @returns {{title: string, image: string}}
+	 * @private
+	 */
+	var _channelDefaults = function(channel){
+
+		var defaults = {
+			title: '',
+			image: ''
+		};
+
+		var nodes = channel[0].childNodes;
+
+		$(nodes).each(function(index, item){
+			if($(item)[0].nodeName === 'itunes:image'){
+				defaults.image = $(item)[0].getAttribute('href');
+			}
+		});
+
+		return defaults;
+	}
+
+	var entries = data.xmlDocument.getElementsByTagName('item'),
+		channel = data.xmlDocument.getElementsByTagName('channel'),
+		defaults = _channelDefaults(channel),
+		feedItems = []
+
+	/**
+	 * Loop through and create feed items
+	 */
 	for (var i = 0; i < entries.length; i++) {
 
 		var entry = entries[i],
-			enclosure = entry.getElementsByTagName('enclosure')[0],
-			img = _findImage(entry);
+			entryTitle = entry.getElementsByTagName('title')[0].innerHTML,
+			entryEnclosure = entry.getElementsByTagName('enclosure')[0],
+			entryImage = _findImage(entry.childNodes),
+			entryPublishDate = entry.getElementsByTagName('pubDate')[0].innerHTML;
 
-		var item = new FeedItem({
-			title: entry.getElementsByTagName('title')[0].innerHTML,
-			enclosure: enclosure,
-			img: img,
-			src: (enclosure) ? enclosure.getAttribute('url') : '',
-			publishDate: entry.getElementsByTagName('pubDate')[0].innerHTML
+		if(!entryImage){
+			entryImage = defaults.image;
+		}
+
+		feedItems[i] = new FeedItem({
+			title: entryTitle,
+			enclosure: entryEnclosure,
+			img: entryImage,
+			src: (entryEnclosure) ? entryEnclosure.getAttribute('url') : '',
+			publishDate: entryPublishDate
 		});
 	}
 
-	return entries;
+	return feedItems;
 };
 
 /**
