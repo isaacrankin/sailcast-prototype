@@ -9,6 +9,7 @@
 	"workingFiles": {
 		"scripts": ["scripts/plugins.js",
 			"scripts/player.js",
+			"scripts/feeditem.js",
 			"scripts/main.js"]
 	}
 }
