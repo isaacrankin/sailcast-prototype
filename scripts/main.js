@@ -66,7 +66,7 @@ var processFeed = function(data){
 			image: entryImage,
 			src: (entryEnclosure) ? entryEnclosure.getAttribute('url') : '',
 			publishDate: entryPublishDate
-		}).create();
+		}).render();
 	}
 
 	return feedItems;
@@ -140,5 +140,6 @@ google.setOnLoadCallback(function(){
 });
 
 App.player = new Player({
+	$el: $('#player'),
 	audioElement: document.getElementById('native-player')
 });

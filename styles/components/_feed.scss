@@ -7,11 +7,20 @@
 }
 
 .feed-item{
+	float: left;
+	width: 100%;
+	clear: both;
 	position: relative;
+	box-sizing: border-box;
 	padding: 1em;
-	margin: 1em 0;
+	margin: 0.5em 0;
 	border: 1px solid #CCC;
 	background-color: #FFF;
+
+	img.poster{
+		float: left;
+		margin-right: 1em;
+	}
 
 	.play-btn{
 		position: absolute;

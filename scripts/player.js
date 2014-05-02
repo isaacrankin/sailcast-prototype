@@ -13,6 +13,8 @@ var Player = function(options) {
 
 	var properties = {
 
+		$el: {},
+
 		audioElement: {
 			value: options.audioElement
 		},
@@ -20,6 +22,7 @@ var Player = function(options) {
 		play: {
 			value: function(podcast){
 				this.audioElement.setAttribute('src', podcast.src);
+				this.renderItem(podcast);
 				this.audioElement.play();
 				return this;
 			}
@@ -29,6 +32,13 @@ var Player = function(options) {
 			value: function(){
 				this.audioElement.pause();
 				return this;
+			}
+		},
+
+		renderItem: {
+			value: function(podcast){
+				console.log(podcast);
+				$('.podcast h4', this.$el).html(podcast.title);
 			}
 		}
 	};

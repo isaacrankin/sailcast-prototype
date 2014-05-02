@@ -7,14 +7,15 @@ var FeedItem = function(options){
 
 	'use strict';
 
-	var _events = function($el){
+	var _events = function($el, title){
 
 		$('.play-btn', $el).click(function(e){
 
 			var audioSource = $(e.currentTarget).data('audio-src');
 
-			// This aint't right!!?? - breaking scope?
+			// A global player?
 			App.player.play({
+				title: title,
 				src: audioSource
 			});
 
@@ -50,12 +51,14 @@ var FeedItem = function(options){
 			value: options.src
 		},
 
-		create: {
+		render: {
 
 			value: function(){
 				this.$feedsContainer = $('#feed');
-				this.$el = this.$feedsContainer.prepend('<div class="feed-item"><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5><img src="'+ this.image + '" width="100" /><button class="play-btn" data-audio-src="'+ this.src +'">Play</button></div>');
-				_events(this.$el);
+				this.$el = $('<div class="feed-item"><header><img class="poster" src="'+ this.image + '" width="100" /><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></header><button class="play-btn" data-audio-src="'+ this.src +'">Play</button></div>').appendTo(this.$feedsContainer);
+
+				_events(this.$el, this.title);
+
 				return this;
 			}
 		}
