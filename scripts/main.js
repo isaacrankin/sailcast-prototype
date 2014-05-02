@@ -1,37 +1,8 @@
-/* global $:false, google:false, Player:false */
+/* global $:false, google:false, Player:false, FeedItem:false */
 
 'use strict';
 
 var App = {};
-
-var FeedItem = function(options){
-
-	var _events = function(){
-
-		$('.feed-item .play-btn').click(function(e){
-			var audioSource = $(e.currentTarget).data('audio-src');
-
-			App.player.play({
-				src: audioSource
-			});
-
-		});
-	};
-
-	return {
-
-		init: (function(options){
-
-			this.$feedsContainer = $('#feed');
-			this.$feedsContainer.prepend('<div class="feed-item"><h4>' + options.title + '</h4><h5>' + options.publishDate + '</h5><img src="'+ options.img + '" width="100" /><button class="play-btn" data-audio-src="'+ options.src +'">Play</button></div>');
-
-			_events();
-
-			return this;
-
-		}(options))
-	};
-};
 
 var processFeed = function(data){
 
@@ -50,10 +21,6 @@ var processFeed = function(data){
 
 	/**
 	 * Set channel defaults, maybe overridden by feed item
-	 *
-	 * @param channel
-	 * @returns {{title: string, image: string}}
-	 * @private
 	 */
 	var _channelDefaults = function(channel){
 
@@ -71,12 +38,12 @@ var processFeed = function(data){
 		});
 
 		return defaults;
-	}
+	};
 
 	var entries = data.xmlDocument.getElementsByTagName('item'),
 		channel = data.xmlDocument.getElementsByTagName('channel'),
 		defaults = _channelDefaults(channel),
-		feedItems = []
+		feedItems = [];
 
 	/**
 	 * Loop through and create feed items
@@ -96,10 +63,10 @@ var processFeed = function(data){
 		feedItems[i] = new FeedItem({
 			title: entryTitle,
 			enclosure: entryEnclosure,
-			img: entryImage,
+			image: entryImage,
 			src: (entryEnclosure) ? entryEnclosure.getAttribute('url') : '',
 			publishDate: entryPublishDate
-		});
+		}).create();
 	}
 
 	return feedItems;
@@ -134,6 +101,7 @@ var LoadFeeds = function(feeds, format) {
 	}
 };
 
+// Hardcoded feeds are temporary
 var feeds = [
 	{
 		name: '5by5',
@@ -171,4 +139,6 @@ google.setOnLoadCallback(function(){
 	new LoadFeeds(feeds, 'xml');
 });
 
-App.player = new Player({});
+App.player = new Player({
+	audioElement: document.getElementById('native-player')
+});

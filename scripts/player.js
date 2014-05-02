@@ -1,22 +1,40 @@
 /* global $:false */
 
-var Player = function(options){
+/**
+ * The main player object
+ *
+ * @param options
+ * @returns {Player}
+ * @constructor
+ */
+var Player = function(options) {
 
 	'use strict';
 
-	return {
+	var properties = {
 
-		el: document.getElementById('player'),
+		audioElement: {
+			value: options.audioElement
+		},
 
-		audioObj: document.getElementById('native-player'),
+		play: {
+			value: function(podcast){
+				this.audioElement.setAttribute('src', podcast.src);
+				this.audioElement.play();
+				return this;
+			}
+		},
 
-		init: (function(options){
-			return this;
-		}(options)),
-
-		play: function(podcast){
-			$(this.audioObj).attr('src', podcast.src);
-			this.audioObj.play();
+		pause: {
+			value: function(){
+				this.audioElement.pause();
+				return this;
+			}
 		}
 	};
+
+	// Define the properties
+	Object.defineProperties(this, properties);
+
+	return this;
 };
