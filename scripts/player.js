@@ -37,7 +37,6 @@ var Player = function(options) {
 
 		renderItem: {
 			value: function(podcast){
-				console.log(podcast);
 				$('.podcast h4', this.$el).html(podcast.title);
 			}
 		}

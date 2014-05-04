@@ -8,8 +8,10 @@
 	},
 	"workingFiles": {
 		"scripts": ["scripts/plugins.js",
+			"scripts/mediator.js",
 			"scripts/player.js",
 			"scripts/feeditem.js",
+			"scripts/feed.js",
 			"scripts/main.js"]
 	}
 }

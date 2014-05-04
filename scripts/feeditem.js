@@ -1,4 +1,4 @@
-/* global $:false, App:false */
+/* global App:false */
 
 /**
  * A single feed item
@@ -13,12 +13,11 @@ var FeedItem = function(options){
 
 			var audioSource = $(e.currentTarget).data('audio-src');
 
-			// A global player?
-			App.player.play({
-				title: title,
-				src: audioSource
-			});
-
+            // Publish to playItem channel
+            App.mediator.publish('playItem', {
+                title: title,
+                src: audioSource
+            });
 		});
 
 		return $el;
