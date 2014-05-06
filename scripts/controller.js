@@ -1,4 +1,4 @@
-/* global Player:false, Mediator: false, LoadFeeds:false */
+/* global Player:false, Mediator: false, Feed:false */
 
 'use strict';
 
@@ -43,6 +43,8 @@ var player = new Player({
 	audioElement: document.getElementById('native-player')
 });
 
+var primaryFeed = new Feed();
+
 // Play item channel
 App.mediator.subscribe('playItem', function(arg){
 	player.play(arg);
@@ -51,5 +53,5 @@ App.mediator.subscribe('playItem', function(arg){
 google.load('feeds', '1');
 
 google.setOnLoadCallback(function(){
-	new LoadFeeds(feeds, 'xml');
+	primaryFeed.loadFeeds(feeds, 'xml');
 });
