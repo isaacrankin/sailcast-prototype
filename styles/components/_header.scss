@@ -1,0 +1,35 @@
+#primary-header{
+	width: 100%;
+	height: 40px;
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	float: left;
+	clear: both;
+	background-color: rgb(255, 255, 255);
+	box-sizing: border-box;
+	padding: 0 1em;
+
+	a.logo{
+		display: block;
+		float: left;
+		text-decoration: none;
+		color: #000000;
+	}
+
+	h1{
+		font-size: 1.3em;
+		margin: 0;
+		line-height: 40px;
+	}
+
+	.menu-btn{
+		height: 100%;
+		border: 0;
+		float: right;
+		padding: 0 1em;
+		position: relative;
+		right: -1em;
+	}
+}
