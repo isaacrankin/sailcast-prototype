@@ -203,7 +203,7 @@ module.exports = function(grunt) {
 			},
 
 			js: {
-				files: ['<%= config.workingPath %>scripts/*.js'],
+				files: ['<%= config.workingPath %>scripts/**/*.js'],
 				tasks: ['copy:scripts', 'concat:working', 'notify:watch_scripts']
 			}
 		},

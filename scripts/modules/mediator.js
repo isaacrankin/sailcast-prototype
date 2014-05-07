@@ -25,7 +25,7 @@ var Mediator = function(){
             subscription.callback.apply(subscription.context, args);
         }
 
-        console.log('Mediator - publish channel: '+ channel);
+        console.log('publish channel: '+ channel);
 
         return this;
     };

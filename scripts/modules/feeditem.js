@@ -53,7 +53,7 @@ var FeedItem = function(options){
 		render: {
 
 			value: function(){
-				this.$feedsContainer = $('#feed');
+				this.$feedsContainer = $('#feed .feed-items');
 				this.$el = $('<div class="feed-item"><header><img class="poster" src="'+ this.image + '" width="100" /><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></header><button class="play-btn" data-audio-src="'+ this.src +'">Play</button></div>').appendTo(this.$feedsContainer);
 
 				_events(this.$el, this.title);

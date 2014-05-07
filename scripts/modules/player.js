@@ -37,7 +37,7 @@ var Player = function(options) {
 
 		renderItem: {
 			value: function(podcast){
-				$('.podcast h4', this.$el).html(podcast.title);
+				$('.current-podcast h4', this.$el).html(podcast.title);
 			}
 		}
 	};

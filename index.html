@@ -25,14 +25,22 @@
 		</header>
 
 		<div id="player">
-			<div class="scrubber"></div>
-			<audio id="native-player" src="" controls ></audio>
-			<div class="podcast">
+			<div class="current-podcast">
 				<h4></h4>
 			</div>
+			<audio id="native-player" src="" controls ></audio>
+			<div class="scrubber"></div>
 		</div>
 
-		<div id="feed"></div>
+		<div id="feed">
+			<div class="feed-controls">
+				<select name="choose-feed" id="choose-feed">
+					<option value="">choose feed</option>
+				</select>
+				<button class="refresh-btn">refresh</button>
+			</div>
+			<div class="feed-items"></div>
+		</div>
 
 		<script src="https://www.google.com/jsapi"></script>
 		<script src="scripts/lib.min.js"></script>

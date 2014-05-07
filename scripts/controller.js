@@ -1,4 +1,4 @@
-/* global Player:false, Mediator: false, Feed:false */
+/* global Player:false, Mediator: false, Feed:false, FeedControlsView:false, FeedView:false */
 
 'use strict';
 
@@ -39,19 +39,28 @@ var App = {
 };
 
 var player = new Player({
-	$el: $('#player'),
-	audioElement: document.getElementById('native-player')
-});
-
-var primaryFeed = new Feed();
+		$el: $('#player'),
+		audioElement: document.getElementById('native-player')
+	}),
+	feed = new Feed(),
+	feedView = new FeedView({
+		$el: $('#feed'),
+		$feedControls: $('#feed .feed-controls')
+	});
 
 // Play item channel
 App.mediator.subscribe('playItem', function(arg){
 	player.play(arg);
 });
 
+// Load feeds channel
+App.mediator.subscribe('loadFeeds', function(arg){
+	feedView.clearFeedItems();
+	feed.loadFeeds(feeds, 'xml');
+});
+
 google.load('feeds', '1');
 
 google.setOnLoadCallback(function(){
-	primaryFeed.loadFeeds(feeds, 'xml');
+	App.mediator.publish('loadFeeds');
 });

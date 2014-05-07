@@ -14,7 +14,7 @@
 
 	.scrubber{
 		width: 100%;
-		height: 28px;
+		height: 24px;
 		position: absolute;
 		z-index: 1;
 		bottom: 0;
@@ -22,10 +22,17 @@
 		background-color: rgb(93, 90, 88);
 	}
 
-	.podcast{
+	.current-podcast{
+		width: 100%;
 		padding: 1em;
+		box-sizing: border-box;
 		color: #FFF;
 		text-align: center;
+		float: left;
+
+		h4{
+			margin: 0;
+		}
 	}
 }
 

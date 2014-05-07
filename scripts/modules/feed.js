@@ -6,10 +6,6 @@ var Feed = function(){
 
 	var properties = {
 
-		lastUpdated: {
-			value: undefined
-		},
-
 		feedItems: {
 			value: [],
 			writable: true,
@@ -17,6 +13,7 @@ var Feed = function(){
 		},
 
 		loadFeeds: {
+
 			value: function(feeds, format){
 
 				var result,
@@ -121,5 +118,4 @@ var Feed = function(){
 	};
 
 	Object.defineProperties(this, properties);
-
 };
