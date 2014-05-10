@@ -12,6 +12,8 @@
 			"scripts/modules/player.js",
 			"scripts/modules/feeditem.js",
 			"scripts/modules/feed.js",
+			"scripts/views/headerview.js",
+			"scripts/views/playerview.js",
 			"scripts/views/feedview.js",
 			"scripts/controller.js"]
 	}

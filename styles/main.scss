@@ -6,9 +6,12 @@ $grid-gutter: 1em;
 $layout-breakpoint-medium: 768px;
 $layout-breakpoint-large: 1024px;
 
+$header-height: 50px;
+
 // Colours
-$colour-brand-primary: #F00;
-$colour-brand-secondary: #0F0;
+$colour-blue: rgb(73, 136, 165);
+$colour-orange: rgb(243, 166, 51);
+$colour-brown: rgb(68, 61, 55);
 
 // Fonts
 $colour-font-primary: 'Arial';
@@ -36,6 +39,7 @@ $sprite-height: 400px;
 }
 
 // General styles
+@import "partials/font";
 @import "partials/base";
 @import "partials/grid";
 @import "partials/modules";

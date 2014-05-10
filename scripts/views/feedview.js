@@ -4,11 +4,6 @@ var FeedView = function(options){
 
 	'use strict';
 
-	// Private properties
-	var _privateMethod = function(){
-		console.log('private method');
-	}
-
 	var properties = {
 
 		$el:{

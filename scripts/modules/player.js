@@ -2,10 +2,6 @@
 
 /**
  * The main player object
- *
- * @param options
- * @returns {Player}
- * @constructor
  */
 var Player = function(options) {
 
@@ -13,37 +9,32 @@ var Player = function(options) {
 
 	var properties = {
 
-		$el: {},
+		$el: {
+			value: options.$el
+		},
 
 		audioElement: {
 			value: options.audioElement
-		},
-
-		play: {
-			value: function(podcast){
-				this.audioElement.setAttribute('src', podcast.src);
-				this.renderItem(podcast);
-				this.audioElement.play();
-				return this;
-			}
-		},
-
-		pause: {
-			value: function(){
-				this.audioElement.pause();
-				return this;
-			}
-		},
-
-		renderItem: {
-			value: function(podcast){
-				$('.current-podcast h4', this.$el).html(podcast.title);
-			}
 		}
 	};
 
 	// Define the properties
 	Object.defineProperties(this, properties);
+
+	this.play = function(podcast){
+
+		if(typeof podcast === 'object' && podcast.src){
+			this.audioElement.setAttribute('src', podcast.src);
+		}
+
+		this.audioElement.play();
+		return this;
+	};
+
+	this.pause = function(){
+		this.audioElement.pause();
+		return this;
+	};
 
 	return this;
 };

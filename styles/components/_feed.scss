@@ -1,8 +1,7 @@
 #feed{
 	width: 100%;
-	max-width: 600px;
 	margin: 0 auto;
-	padding: 1em;
+	max-width: 800px;
 	box-sizing: border-box;
 }
 
@@ -12,21 +11,30 @@
 	clear: both;
 	position: relative;
 	box-sizing: border-box;
-	padding: 1em;
-	margin: 0.5em 0;
-	border: 1px solid #CCC;
+	padding: 1.2em 1em;
+	border-bottom: 1px solid #CCC;
 	background-color: #FFF;
 
 	img.poster{
 		float: left;
-		margin-right: 1em;
+		width: 80px;
+		height: auto;
 		border: 1px solid #CCC;
 	}
 
+	.title{
+		float: left;
+		padding: 0 0.8em;
+
+		h4, h5{
+			margin-top: 0.4em;
+			margin-bottom: 0.5em;
+		}
+	}
+
 	.play-btn{
-		position: absolute;
-		right: 1em;
-		bottom: 1em;
-		padding: 1em;
+		float: right;
+		width: 80px;
+		height: 80px;
 	}
 }

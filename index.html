@@ -17,28 +17,32 @@
 		<![endif]-->
 
 		<header id="primary-header">
-			<a href="/" class="logo">
-				<h1>SailCast</h1>
-			</a>
-			<nav></nav>
-			<button class="menu-btn">menu</button>
+			<div class="inner">
+				<a href="/" class="logo">
+					<h1><abbr title="SailCast">SC</abbr></h1>
+				</a>
+				<div class="actions">
+					<button class="refresh-btn icon-arrows-cw"><span class="label">refresh</span></button>
+					<button class="feeds-btn icon-list"><span class="label">feeds</span></button>
+				</div>
+			</div>
 		</header>
 
 		<div id="player">
 			<div class="current-podcast">
 				<h4></h4>
 			</div>
-			<audio id="native-player" src="" controls ></audio>
+			<div class="player-controls">
+				<button class="icon-to-start"><span class="label">previous</span></button>
+				<button class="play-btn icon-play"><span class="label">play</span></button>
+				<button class="pause-btn icon-pause"><span class="label">pause</span></button>
+				<button class="icon-to-end"><span class="label">next</span></button>
+			</div>
+			<audio id="native-player" src=""></audio>
 			<div class="scrubber"></div>
 		</div>
 
 		<div id="feed">
-			<div class="feed-controls">
-				<select name="choose-feed" id="choose-feed">
-					<option value="">choose feed</option>
-				</select>
-				<button class="refresh-btn">refresh</button>
-			</div>
 			<div class="feed-items"></div>
 		</div>
 

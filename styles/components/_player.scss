@@ -3,13 +3,13 @@
 	min-height: 120px;
 	position: fixed;
 	z-index: 100;
-	top: 40px;
+	bottom: 0;
 	left: 0;
 	background-color: rgb(68, 61, 55);
+	padding-bottom: 24px;
 
 	#native-player{
-		display: block;
-		margin: 40px auto 0;
+		display: none;
 	}
 
 	.scrubber{
@@ -34,11 +34,37 @@
 			margin: 0;
 		}
 	}
+
+	// Player states
+	&[data-state="playing"]{
+
+		.player-controls .play-btn{
+			display: none;
+		}
+
+		.player-controls .pause-btn{
+			display: inline-block;
+		}
+	}
 }
 
+.player-controls{
+	text-align: center;
+
+	button{
+		font-size: 2em;
+		padding: 0.4em;
+	}
+
+	.pause-btn{
+		display: none;
+		background-color: $colour-orange;
+	}
+}
+
+
 html.touch  #player{
-	top: auto;
-	bottom: 0;
+
 }
 
 @media all and (orientation:landscape) {

@@ -1,4 +1,11 @@
-/* global Player:false, Mediator: false, Feed:false, FeedControlsView:false, FeedView:false */
+/* global
+Player:false,
+Mediator: false,
+Feed:false,
+FeedControlsView:false,
+FeedView:false,
+HeaderView:false,
+PlayerView:false */
 
 'use strict';
 
@@ -39,18 +46,36 @@ var App = {
 };
 
 var player = new Player({
-		$el: $('#player'),
-		audioElement: document.getElementById('native-player')
-	}),
-	feed = new Feed(),
-	feedView = new FeedView({
-		$el: $('#feed'),
-		$feedControls: $('#feed .feed-controls')
-	});
+	$el: $('#player'),
+	audioElement: document.getElementById('native-player')
+});
+
+var playerView = new PlayerView({
+	$el: $('#player')
+});
+
+var feed = new Feed();
+
+var feedView = new FeedView({
+	$el: $('#feed'),
+	$feedControls: $('#feed .feed-controls')
+});
+
+var header = new HeaderView({
+	$el: $('#primary-header')
+});
 
 // Play item channel
 App.mediator.subscribe('playItem', function(arg){
 	player.play(arg);
+	playerView.setState('playing');
+	playerView.renderItem(arg)
+});
+
+// Pause item channel
+App.mediator.subscribe('pauseItem', function(arg){
+	player.pause();
+	playerView.setState('pause');
 });
 
 // Load feeds channel

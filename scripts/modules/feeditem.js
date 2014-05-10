@@ -13,11 +13,11 @@ var FeedItem = function(options){
 
 			var audioSource = $(e.currentTarget).data('audio-src');
 
-            // Publish to playItem channel
-            App.mediator.publish('playItem', {
-                title: title,
-                src: audioSource
-            });
+			// Publish to playItem channel
+			App.mediator.publish('playItem', {
+				title: title,
+				src: audioSource
+			});
 		});
 
 		return $el;
@@ -54,7 +54,7 @@ var FeedItem = function(options){
 
 			value: function(){
 				this.$feedsContainer = $('#feed .feed-items');
-				this.$el = $('<div class="feed-item"><header><img class="poster" src="'+ this.image + '" width="100" /><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></header><button class="play-btn" data-audio-src="'+ this.src +'">Play</button></div>').appendTo(this.$feedsContainer);
+				this.$el = $('<div class="feed-item"><img class="poster" src="'+ this.image + '" /><div class="title"><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></div><button class="play-btn" data-audio-src="'+ this.src +'">Play</button></div>').appendTo(this.$feedsContainer);
 
 				_events(this.$el, this.title);
 
