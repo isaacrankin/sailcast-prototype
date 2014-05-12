@@ -18,7 +18,7 @@ var HeaderView = function(options){
 		$('select#feed-list-select option:not(:first-child)', this.$el).remove();
 
 		for(var key in feeds){
-			$('select#feed-list-select', this.$el).prepend('<option value="'+ feeds[key].url +'">'+feeds[key].name+'</option>');
+			$('select#feed-list-select', this.$el).append('<option value="'+ feeds[key].url +'">'+feeds[key].name+'</option>');
 		}
 
 		return this;
