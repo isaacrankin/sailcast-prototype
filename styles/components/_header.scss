@@ -34,12 +34,30 @@
 
 	.actions{
 		height: $header-height;
+		position: relative;
 		border: 0;
 		float: right;
 
-		button{
+		button, #feed-list-select{
 			height: 100%;
+			width: 50px;
 			float: right;
+		}
+
+		.icon-list{
+			position: relative;
+			right: -50px;
+			pointer-events: none;
+			background-color: transparent;
+		}
+
+		#feed-list-select{
+			width: 50px;
+			-webkit-appearance: none;
+			display: block;
+			border: 0;
+			border-radius: 0;
+			opacity: 0;
 		}
 	}
 }

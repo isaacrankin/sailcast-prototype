@@ -61,9 +61,11 @@ var feedView = new FeedView({
 	$feedControls: $('#feed .feed-controls')
 });
 
-var header = new HeaderView({
+var headerView = new HeaderView({
 	$el: $('#primary-header')
 });
+
+headerView.populateFeedMenu(feeds);
 
 // Play item channel
 App.mediator.subscribe('playItem', function(arg){

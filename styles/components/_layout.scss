@@ -1,7 +1,4 @@
 body{
-	padding-top: 40px;
-}
-
-html.touch body{
-	padding-top: 0;
+	padding-top: $header-height;
+	min-width: 320px;
 }

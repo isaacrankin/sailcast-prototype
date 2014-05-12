@@ -18,5 +18,5 @@
 	"trailing": true,
 	"smarttabs": true,
 	"loopfunc": false,
-	"predef": [ "$", "google" ]
+	"predef": [ "$", "google", "Modernizr" ]
 }

@@ -2,23 +2,34 @@
 
 var HeaderView = function(options){
 
-    'use strict';
+	'use strict';
 
-    var properties = {
+	var properties = {
 
-        $el:{
-            value: options.$el
-        }
+		$el:{
+			value: options.$el
+		}
+	};
 
-    };
+	Object.defineProperties(this, properties);
 
-    Object.defineProperties(this, properties);
+	this.populateFeedMenu = function(feeds){
 
-    this.events = function(){
-        $('.refresh-btn', this.$el).click(function(e){
-            App.mediator.publish('loadFeeds');
-        });
-    };
+		$('select#feed-list-select option:not(:first-child)', this.$el).remove();
 
-    this.events();
+		for(var key in feeds){
+			$('select#feed-list-select', this.$el).prepend('<option value="'+ feeds[key].url +'">'+feeds[key].name+'</option>');
+		}
+
+		return this;
+	};
+
+	this.events = function(){
+
+		$('.refresh-btn', this.$el).bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
+			App.mediator.publish('loadFeeds');
+		});
+	};
+
+	this.events();
 };
