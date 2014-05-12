@@ -12,24 +12,20 @@ var FeedView = function(options){
 
 		$feedControls: {
 			value: options.$feedControls
-		},
-
-		clearFeedItems: {
-			value: function(){
-				$('.feed-items', this.$el).empty();
-			}
-		},
-
-		events: {
-			value: function(){
-				$('.refresh-btn', this.$feedControls).click(function(e){
-					App.mediator.publish('loadFeeds');
-				});
-			}
 		}
 	};
 
 	Object.defineProperties(this, properties);
+
+	this.clearFeedItems = function(){
+		$('.feed-items', this.$el).empty();
+	};
+
+	this.events = function(){
+		$('.refresh-btn', this.$feedControls).click(function(e){
+			App.mediator.publish('loadFeeds');
+		});
+	};
 
 	this.events();
 };

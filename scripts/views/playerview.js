@@ -1,4 +1,4 @@
-/* global $:false */
+/* global App:false */
 
 var PlayerView = function(options) {
 

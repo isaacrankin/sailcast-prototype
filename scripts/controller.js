@@ -69,7 +69,7 @@ var header = new HeaderView({
 App.mediator.subscribe('playItem', function(arg){
 	player.play(arg);
 	playerView.setState('playing');
-	playerView.renderItem(arg)
+	playerView.renderItem(arg);
 });
 
 // Pause item channel
