@@ -80,6 +80,11 @@ App.mediator.subscribe('pauseItem', function(arg){
 	playerView.setState('pause');
 });
 
+// Mute channel
+App.mediator.subscribe('mute', function(arg){
+	player.mute();
+});
+
 // Load feeds channel
 App.mediator.subscribe('loadFeeds', function(arg){
 	feedView.clearFeedItems();

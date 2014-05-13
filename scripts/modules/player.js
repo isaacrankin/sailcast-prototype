@@ -36,5 +36,14 @@ var Player = function(options) {
 		return this;
 	};
 
+	this.mute = function(){
+		if(this.audioElement.volume === 0){
+			this.audioElement.volume = 1;
+		}else{
+			this.audioElement.volume = 0;
+		}
+		return this;
+	};
+
 	return this;
 };

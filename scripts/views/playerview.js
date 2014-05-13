@@ -8,19 +8,19 @@ var PlayerView = function(options) {
 
 		$el: {
 			value: options.$el,
-			writable: false
 		},
 
 		$playBtn: {
 			value: $('.play-btn', options.$el),
-			writable: false
 		},
 
 		$pauseBtn: {
 			value: $('.pause-btn', options.$el),
-			writable: false
-		}
+		},
 
+		$muteBtn: {
+			value: $('.mute-btn', options.$el)
+		}
 	};
 
 	// Define the properties
@@ -38,12 +38,18 @@ var PlayerView = function(options) {
 
 	this.events = function(){
 
-		this.$pauseBtn.click(function(e){
+		this.$pauseBtn.bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
 			App.mediator.publish('pauseItem', {});
 		});
 
-		this.$playBtn.click(function(e){
+		this.$playBtn.bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
 			App.mediator.publish('playItem', {});
+		});
+
+		this.$muteBtn.bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
+			$(e.currentTarget).toggleClass('icon-volume-off');
+			$(e.currentTarget).toggleClass('icon-volume-up');
+			App.mediator.publish('mute', {});
 		});
 
 		return this;
