@@ -86,6 +86,11 @@ App.mediator.subscribe('loadFeeds', function(arg){
 	feed.loadFeeds(feeds, 'xml');
 });
 
+// Change the current feed
+App.mediator.subscribe('viewFeed', function(arg){
+
+});
+
 google.load('feeds', '1');
 
 google.setOnLoadCallback(function(){

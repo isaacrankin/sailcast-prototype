@@ -7,22 +7,6 @@ var FeedItem = function(options){
 
 	'use strict';
 
-	var _events = function($el, title){
-
-		$('.play-btn', $el).click(function(e){
-
-			var audioSource = $(e.currentTarget).data('audio-src');
-
-			// Publish to playItem channel
-			App.mediator.publish('playItem', {
-				title: title,
-				src: audioSource
-			});
-		});
-
-		return $el;
-	};
-
 	var properties = {
 
 		$el: {
@@ -52,11 +36,13 @@ var FeedItem = function(options){
 
 		render: {
 
-			value: function(){
-				this.$feedsContainer = $('#feed .feed-items');
+			value: function($container){
+
+				this.$feedsContainer = $container;
+
 				this.$el = $('<div class="feed-item"><img class="poster" src="'+ this.image + '" /><div class="title"><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></div><button class="play-btn" data-audio-src="'+ this.src +'">Play</button></div>').appendTo(this.$feedsContainer);
 
-				_events(this.$el, this.title);
+				this.events(this.$el, this.title);
 
 				return this;
 			}
@@ -65,6 +51,39 @@ var FeedItem = function(options){
 
 	// Define the properties
 	Object.defineProperties(this, properties);
+
+	this.events = function($el, title){
+
+
+		$('.play-btn', $el).click(function(e){
+
+			console.log(this);
+
+			var audioSource = $(e.currentTarget).data('audio-src');
+
+			// Publish to playItem channel
+			App.mediator.publish('playItem', {
+				title: title,
+				src: audioSource
+			});
+		});
+
+
+		$('.poster', $el).bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
+
+			var audioSource = $(e.currentTarget).data('audio-src');
+
+			// Publish to playItem channel
+			App.mediator.publish('playItem', {
+				title: title,
+				src: audioSource
+			});
+
+		});
+
+
+		return $el;
+	};
 
 	return this;
 };
