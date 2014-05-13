@@ -40,7 +40,7 @@ var FeedItem = function(options){
 
 				this.$feedsContainer = $container;
 
-				this.$el = $('<div class="feed-item"><img class="poster" src="'+ this.image + '" /><div class="title"><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></div><button class="play-btn" data-audio-src="'+ this.src +'">Play</button></div>').appendTo(this.$feedsContainer);
+				this.$el = $('<div class="feed-item"><img class="poster" src="'+ this.image + '" /><div class="title"><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></div><button class="play-btn icon-play" data-audio-src="'+ this.src +'"><span class="label">play</span></button></div>').appendTo(this.$feedsContainer);
 
 				this.events(this.$el, this.title);
 
@@ -54,10 +54,7 @@ var FeedItem = function(options){
 
 	this.events = function($el, title){
 
-
 		$('.play-btn', $el).click(function(e){
-
-			console.log(this);
 
 			var audioSource = $(e.currentTarget).data('audio-src');
 
