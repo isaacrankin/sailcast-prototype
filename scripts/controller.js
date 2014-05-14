@@ -73,7 +73,7 @@ App.mediator.subscribe('playItem', function(arg){
 		playerView.setState('playing');
 		playerView.renderItem(arg);
 	}else{
-		alert('Cannot play podcast, invalid src.')
+		window.alert('Cannot play podcast, invalid src.');
 	}
 });
 
@@ -86,6 +86,14 @@ App.mediator.subscribe('pauseItem', function(arg){
 // Mute channel
 App.mediator.subscribe('mute', function(arg){
 	player.mute();
+});
+
+// Seek by an increment
+App.mediator.subscribe('seekIncrement', function(arg){
+
+	if(player.getReadyState() > 0){
+		player.seekByIncrement(arg.direction, arg.increment);
+	}
 });
 
 // Load feeds channel

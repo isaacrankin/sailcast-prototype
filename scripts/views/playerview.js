@@ -20,6 +20,14 @@ var PlayerView = function(options) {
 
 		$muteBtn: {
 			value: $('.mute-btn', options.$el)
+		},
+
+		$seekBackBtn: {
+			value: $('.seek-back-btn', options.$el)
+		},
+
+		$seekForwardBtn: {
+			value: $('.seek-forward-btn', options.$el)
 		}
 	};
 
@@ -38,18 +46,32 @@ var PlayerView = function(options) {
 
 	this.events = function(){
 
-		this.$pauseBtn.bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
+		this.$pauseBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
 			App.mediator.publish('pauseItem', {});
 		});
 
-		this.$playBtn.bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
+		this.$playBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
 			App.mediator.publish('playItem', {});
 		});
 
-		this.$muteBtn.bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
+		this.$muteBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
 			$(e.currentTarget).toggleClass('icon-volume-off');
 			$(e.currentTarget).toggleClass('icon-volume-up');
 			App.mediator.publish('mute', {});
+		});
+
+		this.$seekBackBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
+			App.mediator.publish('seekIncrement', {
+				direction: 'back',
+				increment: 15
+			});
+		});
+
+		this.$seekForwardBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
+			App.mediator.publish('seekIncrement',{
+				direction: 'forward',
+				increment: 15
+			});
 		});
 
 		return this;
