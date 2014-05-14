@@ -69,9 +69,12 @@ headerView.populateFeedMenu(feeds);
 
 // Play item channel
 App.mediator.subscribe('playItem', function(arg){
-	player.play(arg);
-	playerView.setState('playing');
-	playerView.renderItem(arg);
+	if(player.play(arg)){
+		playerView.setState('playing');
+		playerView.renderItem(arg);
+	}else{
+		alert('Cannot play podcast, invalid src.')
+	}
 });
 
 // Pause item channel

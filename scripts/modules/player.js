@@ -7,6 +7,15 @@ var Player = function(options) {
 
 	'use strict';
 
+	var _validateSrc = function(mediaElement, src){
+
+		// find type of file
+		var spl = src.split('.'),
+			type = 'audio/'+ spl[(spl.length - 1)];
+
+		return (mediaElement.canPlayType(type) === '') ? false : true;
+	};
+
 	var properties = {
 
 		$el: {
@@ -23,12 +32,16 @@ var Player = function(options) {
 
 	this.play = function(podcast){
 
-		if(typeof podcast === 'object' && podcast.src){
-			this.audioElement.setAttribute('src', podcast.src);
-		}
+		if(_validateSrc(this.audioElement, podcast.src)){
 
-		this.audioElement.play();
-		return this;
+			this.audioElement.setAttribute('src', podcast.src);
+			this.audioElement.play();
+
+			return this;
+
+		}else{
+			return false;
+		}
 	};
 
 	this.pause = function(){
@@ -37,11 +50,7 @@ var Player = function(options) {
 	};
 
 	this.mute = function(){
-		if(this.audioElement.volume === 0){
-			this.audioElement.volume = 1;
-		}else{
-			this.audioElement.volume = 0;
-		}
+		this.audioElement.muted = (this.audioElement.muted) ? false : true;
 		return this;
 	};
 
