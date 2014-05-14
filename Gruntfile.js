@@ -248,7 +248,8 @@ module.exports = function(grunt) {
 				src: ['tests/**/*.html']
 			},
 			options: {
-				run: true
+				run: true,
+				log: true
 			}
 		}
 	});

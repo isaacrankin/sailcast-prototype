@@ -9,6 +9,7 @@ describe("Player", function() {
 		newAudioElement.setAttribute('id', 'native-player');
 		document.body.insertBefore(newAudioElement);
 
+		// Create new instance of Player module
 		var player = new Player({
 			audioElement: document.getElementById('native-player')
 		});
@@ -17,16 +18,17 @@ describe("Player", function() {
 			expect(player.seekIncrement).to.be.a('number');
 		});
 
-		it("getReadyState should return a number between 0 and 4", function() {
-			expect(player.getReadyState()).to.be.within(0,4);
-		});
+		// Audio support is required for these tests, not available for Phantom JS]
+		// https://github.com/ariya/phantomjs/wiki/Supported-Web-Standards
+		if(Modernizr.audio){
+			it("getReadyState should return a number between 0 and 4", function() {
+				expect(player.getReadyState()).to.be.within(0,4);
+			});
 
-		it("play should return false", function() {
-			expect(player.play({ src: 'http://example.com/podcast' })).to.equal(false);
-		});
-
-		// How to test DOM or Browser dependent conditions?
-		// play depends on if Browser supports podcast file format
+			it("play should return false", function() {
+				expect(player.play({ src: 'http://example.com/podcast' })).to.equal(false);
+			});
+		}
 
 	});
 });
