@@ -6,7 +6,13 @@
 	bottom: 0;
 	left: 0;
 	background-color: rgb(68, 61, 55);
-	padding-top: 1em;
+	padding: 1em 0;
+
+	.inner{
+		width: 100%;
+		max-width: 800px;
+		margin: 0 auto;
+	}
 
 	#native-player{
 		display: none;
@@ -17,7 +23,7 @@
 		width: 100%;
 		height: 24px;
 		background-color: rgb(93, 90, 88);
-		margin-top: 1em;
+		margin-bottom: 1em;
 	}
 
 	.current-podcast{
@@ -54,19 +60,13 @@
 		padding: 0.4em;
 	}
 
+	.play-btn,
+	.pause-btn{
+		margin: 0 0.5em;
+	}
+
 	.pause-btn{
 		display: none;
 		background-color: $colour-orange;
-	}
-}
-
-
-html.touch  #player{
-
-}
-
-@media all and (orientation:landscape) {
-	html.touch  #player{
-
 	}
 }

@@ -9,7 +9,7 @@ var Player = function(options) {
 
 	var _validateSrc = function(mediaElement, src){
 
-		if(typeof src !== 'string'){
+		if(typeof src !== 'string' || src === ''){
 			return false;
 		}
 
@@ -26,8 +26,27 @@ var Player = function(options) {
 			value: options.audioElement
 		},
 
+		playbackLoopInterval: {
+			value: 500
+		},
+
 		seekIncrement: {
 			value: 10
+		},
+
+		state:{
+			value: undefined,
+			writable: true
+		},
+
+		currentItem: {
+			value: undefined,
+			writable: true
+		},
+
+		playbackLoop: {
+			value: undefined,
+			writable: true
 		}
 	};
 
@@ -38,12 +57,47 @@ var Player = function(options) {
 		return this.audioElement.readyState;
 	};
 
+	this.playCallback = function(){
+
+		var self = this;
+
+		this.playbackLoop = setTimeout(function(){
+
+			console.log(self.audioElement.duration);
+			console.log(self.audioElement.duration);
+
+			self.playCallback();
+
+		}, this.playbackLoopInterval);
+	};
+
+	this.startPlaybackLoop = function(){
+		this.stopPlaybackLoop();
+		this.playCallback();
+	};
+
+	this.stopPlaybackLoop = function(){
+		clearTimeout(this.playbackLoop);
+	};
+
 	this.play = function(podcast){
 
 		if(_validateSrc(this.audioElement, podcast.src)){
 
 			this.audioElement.setAttribute('src', podcast.src);
 			this.audioElement.play();
+			this.startPlaybackLoop();
+			this.currentItem = podcast;
+			this.state = 'playing';
+
+			return this;
+
+		// Try play a paused item
+		}else if(this.state === 'paused' && typeof this.currentItem !== 'undefined'){
+
+			this.audioElement.play();
+			this.startPlaybackLoop();
+			this.state = 'playing';
 
 			return this;
 
@@ -53,7 +107,9 @@ var Player = function(options) {
 	};
 
 	this.pause = function(){
+		this.stopPlaybackLoop();
 		this.audioElement.pause();
+		this.state = 'paused';
 		return this;
 	};
 

@@ -32,18 +32,20 @@
 		</header>
 
 		<div id="player">
-			<div class="current-podcast">
-				<h4></h4>
+			<div class="inner">
+				<div class="current-podcast">
+					<h4>Example Podcast Title here</h4>
+				</div>
+				<div class="player-controls" data-sound="on">
+					<div class="scrubber"></div>
+					<button class="seek-back-btn icon-fast-bw"><span class="label">previous</span></button>
+					<button class="play-btn icon-play"><span class="label">play</span></button>
+					<button class="pause-btn icon-pause"><span class="label">pause</span></button>
+					<button class="seek-forward-btn icon-fast-fw"><span class="label">next</span></button>
+					<button class="mute-btn icon-volume-up"><span class="label">mute</span></button>
+				</div>
+				<audio id="native-player" src=""></audio>
 			</div>
-			<div class="player-controls" data-sound="on">
-				<button class="seek-back-btn icon-fast-bw"><span class="label">previous</span></button>
-				<button class="play-btn icon-play"><span class="label">play</span></button>
-				<button class="pause-btn icon-pause"><span class="label">pause</span></button>
-				<button class="seek-forward-btn icon-fast-fw"><span class="label">next</span></button>
-				<button class="mute-btn icon-volume-up"><span class="label">mute</span></button>
-			</div>
-			<audio id="native-player" src=""></audio>
-			<div class="scrubber"></div>
 		</div>
 
 		<div class="view">
