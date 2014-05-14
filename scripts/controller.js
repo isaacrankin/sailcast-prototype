@@ -76,6 +76,11 @@ App.mediator.subscribe('playItem', function(arg){
 	}
 });
 
+// Playback loop
+App.mediator.subscribe('playback', function(arg){
+	playerView.updateScrubber(arg);
+});
+
 // Pause item channel
 App.mediator.subscribe('pauseItem', function(arg){
 	player.pause();
@@ -89,7 +94,6 @@ App.mediator.subscribe('mute', function(arg){
 
 // Seek by an increment
 App.mediator.subscribe('seekIncrement', function(arg){
-
 	if(player.getReadyState() > 0){
 		player.seekByIncrement(arg.direction, arg.increment);
 	}

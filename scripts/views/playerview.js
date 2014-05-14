@@ -44,6 +44,11 @@ var PlayerView = function(options) {
 		return this;
 	};
 
+	this.updateScrubber = function(data){
+		$('.scrubber .duration .minutes', this.$el).html( data.currentTimeMinutes );
+		$('.scrubber .duration .seconds', this.$el).html( data.currentTimeSeconds );
+	};
+
 	this.events = function(){
 
 		this.$pauseBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){

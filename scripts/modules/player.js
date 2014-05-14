@@ -1,4 +1,4 @@
-/* global $:false */
+/* global App:false */
 
 /**
  * The main player object
@@ -13,7 +13,7 @@ var Player = function(options) {
 			return false;
 		}
 
-		// find type of file
+		// find type of file by getting the file extension
 		var spl = src.split('.'),
 			type = 'audio/'+ spl[(spl.length - 1)];
 
@@ -64,7 +64,13 @@ var Player = function(options) {
 		this.playbackLoop = setTimeout(function(){
 
 			console.log(self.audioElement.duration);
-			console.log(self.audioElement.duration);
+			console.log(self.audioElement.currentTime);
+
+			App.mediator.publish('playback', {
+				currentTime: self.audioElement.currentTime,
+				currentTimeSeconds: Math.round( self.audioElement.currentTime ),
+				currentTimeMinutes: Math.floor( (self.audioElement.currentTime/60) )
+			});
 
 			self.playCallback();
 
