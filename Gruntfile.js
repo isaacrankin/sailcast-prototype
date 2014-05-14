@@ -242,10 +242,10 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Mocha
+		// Grunt Mocha
 		mocha: {
 			all: {
-				src: ['tests/testrunner.html']
+				src: ['tests/**/*.html']
 			},
 			options: {
 				run: true

@@ -22,10 +22,6 @@ var Player = function(options) {
 
 	var properties = {
 
-		$el: {
-			value: options.$el
-		},
-
 		audioElement: {
 			value: options.audioElement
 		},

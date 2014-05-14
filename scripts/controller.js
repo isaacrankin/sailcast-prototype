@@ -46,7 +46,6 @@ var App = {
 };
 
 var player = new Player({
-	$el: $('#player'),
 	audioElement: document.getElementById('native-player')
 });
 
