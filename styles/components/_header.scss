@@ -26,10 +26,13 @@
 	}
 
 	h1{
-		font-size: 1.3em;
+		font-size: 1.4em;
 		margin: 0;
-		line-height: $header-height;
+		letter-spacing: 1px;
+		line-height: $header-height + 3px;
 		color: white;
+		font-family: 'Yellowtail', cursive;
+		text-shadow: 1px 1px $colour-brown;
 	}
 
 	.actions{
