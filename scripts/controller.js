@@ -68,9 +68,17 @@ headerView.populateFeedMenu(feeds);
 
 // Play item channel
 App.mediator.subscribe('playItem', function(arg){
+
+	//TODO: player state could be managed better - preventing re-render
+	var playerState = player.state;
+
 	if(player.play(arg)){
+
+		if(playerState !== 'paused' ) {
+			playerView.renderItem(arg);
+		}
+
 		playerView.setState('playing');
-		playerView.renderItem(arg);
 	}else{
 		window.alert('Cannot play podcast, invalid src.');
 	}

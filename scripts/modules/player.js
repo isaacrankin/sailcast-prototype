@@ -63,9 +63,6 @@ var Player = function(options) {
 
 		this.playbackLoop = setTimeout(function(){
 
-//			console.log(self.audioElement.duration);
-//			console.log(self.audioElement.currentTime);
-
 			var minutes = Math.floor( (self.audioElement.currentTime/60) );
 
 			// round minutes to int - round minutes to
@@ -96,7 +93,7 @@ var Player = function(options) {
 
 	this.play = function(podcast){
 
-		if(_validateSrc(this.audioElement, podcast.src)){
+		if(typeof podcast === 'object' && _validateSrc(this.audioElement, podcast.src)){
 
 			this.audioElement.setAttribute('src', podcast.src);
 			this.audioElement.play();
