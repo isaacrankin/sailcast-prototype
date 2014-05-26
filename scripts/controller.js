@@ -99,6 +99,12 @@ App.mediator.subscribe('seekIncrement', function(arg){
 	}
 });
 
+App.mediator.subscribe('seekToPercentage', function(arg){
+	if(player.getReadyState() > 0){
+		player.seekToPercentage(arg.percentage);
+	}
+});
+
 // Load feeds channel
 App.mediator.subscribe('loadFeeds', function(arg){
 	feedView.clearFeedItems();

@@ -43,6 +43,8 @@
 							<span class="minutes">00</span>:<span class="seconds">00</span>
 						</span>
 						<span class="duration-negative">00:00</span>
+						<span class="progress"></span>
+						<span class="buffered"></span>
 					</div>
 					<button class="seek-back-btn icon-fast-bw"><span class="label">previous</span></button>
 					<button class="play-btn icon-play"><span class="label">play</span></button>
@@ -56,7 +58,22 @@
 
 		<div class="view">
 			<div id="feed">
-				<div class="feed-items"></div>
+				<div class="feed-items">
+
+					<template id="feed-item">
+						<div class="feed-item">
+							<img class="poster" src="" alt="">
+							<div class="title">
+								<h4>[podcast title]</h4>
+								<h5>[podcast date]</h5>
+							</div>
+							<button class="play-btn icon-play" data-audio-src="">
+								<span class="label">play</span>
+							</button>
+						</div>
+					</template>
+
+				</div>
 			</div>
 		</div>
 

@@ -63,13 +63,21 @@ var Player = function(options) {
 
 		this.playbackLoop = setTimeout(function(){
 
-			console.log(self.audioElement.duration);
-			console.log(self.audioElement.currentTime);
+//			console.log(self.audioElement.duration);
+//			console.log(self.audioElement.currentTime);
+
+			var minutes = Math.floor( (self.audioElement.currentTime/60) );
+
+			// round minutes to int - round minutes to
+
+			// (self.audioElement.currentTime/60)
 
 			App.mediator.publish('playback', {
 				currentTime: self.audioElement.currentTime,
-				currentTimeSeconds: Math.round( self.audioElement.currentTime ),
-				currentTimeMinutes: Math.floor( (self.audioElement.currentTime/60) )
+				duration: self.audioElement.duration,
+				currentTimeSeconds: Math.round( self.audioElement.currentTime ) - (minutes*60),
+				currentTimeMinutes: Math.floor( (self.audioElement.currentTime/60) ),
+				progress: Math.round( (self.audioElement.currentTime / (self.audioElement.duration/100)) * 100) / 100
 			});
 
 			self.playCallback();
@@ -122,6 +130,11 @@ var Player = function(options) {
 	this.mute = function(){
 		this.audioElement.muted = (this.audioElement.muted) ? false : true;
 		return this;
+	};
+
+	this.seekToPercentage = function(percentage){
+		this.audioElement.currentTime = (this.audioElement.duration/100) * percentage;
+		return this.audioElement.currentTime;
 	};
 
 	this.seekByIncrement = function(direction, increment){
