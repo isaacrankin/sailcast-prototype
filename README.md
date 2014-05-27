@@ -23,3 +23,4 @@ More details as the project develops...
 - jQuery
 - Modernizr
 - Normalize.css
+- Google Feeds API
