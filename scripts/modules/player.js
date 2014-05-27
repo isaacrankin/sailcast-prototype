@@ -115,6 +115,7 @@ var Player = function(options) {
 		if(typeof podcast === 'object' && _validateSrc(this.audioElement, podcast.src)){
 
 			this.audioElement.setAttribute('src', podcast.src);
+			this.audioElement.muted = false;
 			this.audioElement.play();
 			this.startPlaybackLoop();
 			this.currentItem = podcast;
