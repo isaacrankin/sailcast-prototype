@@ -41,7 +41,16 @@
 		font-size: 1.5em;
 		padding: 0;
 		background-color: transparent;
-		border: 1px solid $colour-blue;
+		border: 2px solid $colour-blue;
+
+		&:focus{
+			opacity: 1;
+			border-color: $colour-orange;
+
+			&:before{
+				color: $colour-orange;
+			}
+		}
 
 		&:before{
 			width: auto;
