@@ -1,5 +1,23 @@
 var expect = chai.expect;
 
+// DataManager
+describe("DataManager", function() {
+
+});
+
+// FeedManager
+describe("FeedManager", function() {
+
+	describe(".getFeeds()", function() {
+
+		var feedManager = new FeedManager({});
+
+		it("should return an array of feeds", function(){
+			expect(feedManager.getFeeds()).to.be.a('array');
+		});
+	});
+});
+
 // Player module
 describe("Player", function() {
 	describe("constructor", function() {

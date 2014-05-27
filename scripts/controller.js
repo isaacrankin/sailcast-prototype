@@ -1,3 +1,5 @@
+// TODO: Find a better way to avoid this list for jsHint
+
 /* global
 Player:false,
 Mediator: false,
@@ -5,7 +7,9 @@ Feed:false,
 FeedControlsView:false,
 FeedView:false,
 HeaderView:false,
-PlayerView:false */
+PlayerView:false,
+FeedManager:false,
+DataManager:false */
 
 'use strict';
 
@@ -46,6 +50,10 @@ var feeds = [
 var App = {
 	mediator: new Mediator()
 };
+
+var db = new DataManager({
+	dbName: 'SailCast'
+});
 
 var player = new Player({
 	audioElement: document.getElementById('native-player')
