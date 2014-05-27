@@ -5,6 +5,14 @@
 # SailCast
 ## A web based podcatcher
 
-SailCast is designed to be a lightweight crossplatform podcatcher, it will utilise HTML5 technologies such as HTMLMediaElement and IndexedDB.
+SailCast is designed to be a lightweight crossplatform podcatcher, it will utilise HTML5 technologies such as HTMLMediaElement API and IndexedDB.
 
 More details as the project develops...
+
+## Project Goals
+- Demonstrate native HTML5 technologies
+- Experiment ECMAScript 6 features
+- Support the latest versions of Chrome, Firefox, Safari and IE
+- Minimal dependencies
+- Keep it lightweight and easy to deploy!
+
