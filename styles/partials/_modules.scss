@@ -1,2 +1,29 @@
 // Re-usable UI elements, e.g. buttons, widgets, icons etc.
 // --------------------------------------------------------------------
+button, .btn{
+	background-color: $colour-blue;
+	border: 0;
+	color: white;
+	text-transform: lowercase;
+	letter-spacing: 1px;
+	padding: 0.8em;
+	display: inline-block;
+
+	.label{
+		display: none;
+	}
+
+	&:hover{
+		background-color: rgb(243, 166, 51);
+	}
+
+	&:focus{
+		outline: none;
+		opacity: 0.8;
+	}
+}
+
+select.btn{
+	border-radius: 0;
+	-webkit-appearance: none;
+}
