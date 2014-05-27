@@ -16,3 +16,10 @@ More details as the project develops...
 - Minimal dependencies
 - Keep it lightweight and easy to deploy!
 
+## Planned Features
+- Playlists
+
+## Dependencies
+- jQuery
+- Modernizr
+- Normalize.css
