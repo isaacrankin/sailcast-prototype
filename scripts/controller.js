@@ -9,6 +9,8 @@ PlayerView:false */
 
 'use strict';
 
+// TODO: Create a keyboard controls module - play, pause, next, prev, scan, mute
+
 // Hardcoded feeds are temporary
 var feeds = [
 	{
@@ -74,6 +76,8 @@ App.mediator.subscribe('playItem', function(arg){
 
 	if(player.play(arg)){
 
+		//TODO: show a loading state
+
 		if(playerState !== 'paused' ) {
 			playerView.renderItem(arg);
 		}
@@ -87,6 +91,12 @@ App.mediator.subscribe('playItem', function(arg){
 // Playback loop
 App.mediator.subscribe('playback', function(arg){
 	playerView.updateScrubber(arg);
+});
+
+// Stop item
+App.mediator.subscribe('stopItem', function(arg){
+	player.stop();
+	playerView.reset();
 });
 
 // Pause item channel

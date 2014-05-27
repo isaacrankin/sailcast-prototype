@@ -1,5 +1,7 @@
 /* global App:false */
 
+// TODO: Consider passing in jQuery - $ = jQuery to allow the
+
 var PlayerView = function(options) {
 
 	'use strict';
@@ -7,11 +9,15 @@ var PlayerView = function(options) {
 	var properties = {
 
 		$el: {
-			value: options.$el,
+			value: options.$el
 		},
 
 		$playBtn: {
-			value: $('.play-btn', options.$el),
+			value: $('.play-btn', options.$el)
+		},
+
+		$stopBtn: {
+			value:  $('.stop-btn', options.$el)
 		},
 
 		$pauseBtn: {
@@ -49,10 +55,24 @@ var PlayerView = function(options) {
 	};
 
 	this.updateScrubber = function(data){
+
 		$('.duration .minutes', this.$scrubber).html( data.currentTimeMinutes );
 		$('.duration .seconds', this.$scrubber).html( data.currentTimeSeconds );
 
 		$('.progress', this.$scrubber).css('width', data.progress + '%');
+	};
+
+	this.reset = function(){
+
+		this.updateScrubber({
+			currentTimeMinutes: 0,
+			currentTimeSeconds: 0,
+			progress: 0
+		});
+
+		$('.current-podcast h4', this.$el).empty();
+
+		this.setState('stopped');
 	};
 
 	this.events = function(){
@@ -63,6 +83,10 @@ var PlayerView = function(options) {
 
 		this.$playBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
 			App.mediator.publish('playItem');
+		});
+
+		this.$stopBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
+			App.mediator.publish('stopItem');
 		});
 
 		this.$muteBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
@@ -87,6 +111,7 @@ var PlayerView = function(options) {
 
 		this.$scrubber.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
 
+			// TODO: research what e.originalEvent - returned by jQuery
 			var clientX  = (Modernizr.touch) ? e.originalEvent.changedTouches[0].pageX : e.clientX;
 			var dist = clientX - $(e.currentTarget).offset().left;
 

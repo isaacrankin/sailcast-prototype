@@ -20,6 +20,30 @@ var Player = function(options) {
 		return (mediaElement.canPlayType(type) === '') ? false : true;
 	};
 
+	var _playbackValues = function(audioElement){
+
+		var currentTime = audioElement.currentTime,
+			duration = audioElement.duration,
+			minutes = Math.floor( currentTime/60 );
+
+		// TODO: Return buffered as a %
+		if(audioElement.buffered.length === 1){
+//			console.log(audioElement.buffered.start(0));
+//			console.log(audioElement.buffered.end(0));
+		}
+
+		// TODO: format time correctly with leading zeros e.g. 00:00
+
+		return {
+			currentTime: currentTime,
+			duration: duration,
+			minutes: minutes,
+			currentTimeSeconds: Math.round( currentTime ) - (minutes * 60),
+			currentTimeMinutes: Math.floor( (currentTime/60) ),
+			progress: Math.round( (currentTime / (duration/100)) * 100) / 100
+		};
+	};
+
 	var properties = {
 
 		audioElement: {
@@ -63,20 +87,14 @@ var Player = function(options) {
 
 		this.playbackLoop = setTimeout(function(){
 
-			var minutes = Math.floor( (self.audioElement.currentTime/60) );
+			var playbackValues = _playbackValues(self.audioElement);
 
-			// round minutes to int - round minutes to
+			// Publish playback values, used by player view for scrubber etc.
+			App.mediator.publish('playback', playbackValues);
 
-			// (self.audioElement.currentTime/60)
+			//TODO: Handle podcast finished playing - reset player or play next?
 
-			App.mediator.publish('playback', {
-				currentTime: self.audioElement.currentTime,
-				duration: self.audioElement.duration,
-				currentTimeSeconds: Math.round( self.audioElement.currentTime ) - (minutes*60),
-				currentTimeMinutes: Math.floor( (self.audioElement.currentTime/60) ),
-				progress: Math.round( (self.audioElement.currentTime / (self.audioElement.duration/100)) * 100) / 100
-			});
-
+			// Call itself
 			self.playCallback();
 
 		}, this.playbackLoopInterval);
@@ -93,6 +111,7 @@ var Player = function(options) {
 
 	this.play = function(podcast){
 
+		// Play the given podcast if valid
 		if(typeof podcast === 'object' && _validateSrc(this.audioElement, podcast.src)){
 
 			this.audioElement.setAttribute('src', podcast.src);
@@ -124,18 +143,27 @@ var Player = function(options) {
 		return this;
 	};
 
+	this.stop = function(){
+		// Removing attribute value stops download of media
+		this.audioElement.setAttribute('src', '');
+		this.stopPlaybackLoop();
+		this.state = 'stopped';
+		return this;
+	};
+
 	this.mute = function(){
 		this.audioElement.muted = (this.audioElement.muted) ? false : true;
 		return this;
 	};
 
 	this.seekToPercentage = function(percentage){
-		this.audioElement.currentTime = (this.audioElement.duration/100) * percentage;
+		this.audioElement.currentTime = (this.audioElement.duration / 100) * percentage;
 		return this.audioElement.currentTime;
 	};
 
 	this.seekByIncrement = function(direction, increment){
 
+		// Fallback to default increment
 		if(typeof increment === 'undefined'){
 			increment = this.seekIncrement;
 		}
@@ -148,6 +176,4 @@ var Player = function(options) {
 
 		return this.audioElement.currentTime;
 	};
-
-	return this;
 };
