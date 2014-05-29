@@ -9,6 +9,8 @@ SailCast is designed to be a lightweight crossplatform podcatcher, it will utili
 
 More details as the project develops...
 
+Demo [http://sailcast.isaacrankin.com](http://sailcast.isaacrankin.com)
+
 ## Project Goals
 - Demonstrate native HTML5 technologies
 - Experiment ECMAScript 6 features
@@ -18,6 +20,8 @@ More details as the project develops...
 
 ## Planned Features
 - Playlists
+- "No sign-in" save settings to the browser
+- User accounts
 
 ## Dependencies
 - jQuery
