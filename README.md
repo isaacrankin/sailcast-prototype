@@ -17,6 +17,7 @@ Demo [http://sailcast.isaacrankin.com](http://sailcast.isaacrankin.com)
 - Support the latest versions of Chrome, Firefox, Safari and IE
 - Minimal dependencies
 - Keep it lightweight and easy to deploy!
+- Support [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) requirments
 
 ## Planned Features
 - Playlists
