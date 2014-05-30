@@ -6,7 +6,16 @@ var PlayerView = function(options) {
 
 	'use strict';
 
+	var _leadingZero = function(val){
+		return (val < 10) ? '0'+val : val;
+	};
+
 	var properties = {
+
+		state: {
+			value: undefined,
+			writable: true
+		},
 
 		$el: {
 			value: options.$el
@@ -46,6 +55,7 @@ var PlayerView = function(options) {
 
 	this.setState = function(state){
 		this.$el.attr('data-state', state);
+		this.state = state;
 		return this;
 	};
 
@@ -56,18 +66,23 @@ var PlayerView = function(options) {
 
 	this.updateScrubber = function(data){
 
-		$('.duration .minutes', this.$scrubber).html( data.currentTimeMinutes );
-		$('.duration .seconds', this.$scrubber).html( data.currentTimeSeconds );
+		var hours = _leadingZero(data.progressHours),
+			minutes = _leadingZero(data.progressMinutes),
+			seconds = _leadingZero(data.progressSeconds);
 
-		$('.progress', this.$scrubber).css('width', data.progress + '%');
+		$('.duration .hours', this.$scrubber).html( hours );
+		$('.duration .minutes', this.$scrubber).html( minutes );
+		$('.duration .seconds', this.$scrubber).html( seconds );
+		$('.progress', this.$scrubber).css('width', data.progressPercentage + '%');
 	};
 
 	this.reset = function(){
 
 		this.updateScrubber({
-			currentTimeMinutes: 0,
-			currentTimeSeconds: 0,
-			progress: 0
+			progressHours: 0,
+			progressMinutes: 0,
+			progressSeconds: 0,
+			progressPercentage: 0
 		});
 
 		$('.current-podcast h4', this.$el).empty();

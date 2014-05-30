@@ -131,7 +131,8 @@ module.exports = function(grunt) {
 						'*.{ico,txt,html}',
 						'favicon.png',
 						'apple-touch-icon-precomposed.png',
-						'fonts/{,*/}*.*'
+						'fonts/{,*/}*.*',
+						'images/{,*/}*.svg'
 					]
 				}]
 			},

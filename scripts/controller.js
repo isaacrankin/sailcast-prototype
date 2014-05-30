@@ -90,7 +90,8 @@ App.mediator.subscribe('playItem', function(arg){
 			playerView.renderItem(arg);
 		}
 
-		playerView.setState('playing');
+		playerView.setState('loading');
+
 	}else{
 		window.alert('Cannot play podcast, invalid src.');
 	}
@@ -99,6 +100,11 @@ App.mediator.subscribe('playItem', function(arg){
 // Playback loop
 App.mediator.subscribe('playback', function(arg){
 	playerView.updateScrubber(arg);
+
+	// TODO: refactor so only player module reports player state
+	if(arg.playerState === 4 && playerView.state !== 'playing'){
+		playerView.setState('playing');
+	}
 });
 
 // Stop item

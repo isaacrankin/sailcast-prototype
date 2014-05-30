@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>SailCast Prototype</title>
+		<meta name="author" content="Isaac Rankin - isaacrankin.com">
 		<meta name="description" content="A web based podcatcher">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" href="favicon.png">
@@ -39,18 +40,21 @@
 				<div class="player-controls" data-sound="on">
 					<div class="scrubber">
 						<span class="duration">
-							<span class="minutes">00</span>:<span class="seconds">00</span>
+							<span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds">00</span>
 						</span>
 						<span class="duration-negative">00:00</span>
 						<span class="progress"></span>
 						<span class="buffered"></span>
+						<div class="loading-bar">Loading...</div>
 					</div>
-					<button class="seek-back-btn icon-fast-bw"><span class="label">previous</span></button>
-					<button class="stop-btn icon-stop"><span class="label">stop</span></button>
-					<button class="play-btn icon-play"><span class="label">play</span></button>
-					<button class="pause-btn icon-pause"><span class="label">pause</span></button>
-					<button class="seek-forward-btn icon-fast-fw"><span class="label">next</span></button>
-					<button class="mute-btn icon-volume-up"><span class="label">mute</span></button>
+					<div class="player-controls-buttons">
+						<button class="seek-back-btn icon-fast-bw"><span class="label">previous</span></button>
+						<button class="stop-btn icon-stop"><span class="label">stop</span></button>
+						<button class="play-btn icon-play"><span class="label">play</span></button>
+						<button class="pause-btn icon-pause"><span class="label">pause</span></button>
+						<button class="seek-forward-btn icon-fast-fw"><span class="label">next</span></button>
+						<button class="mute-btn icon-volume-up"><span class="label">mute</span></button>
+					</div>
 				</div>
 				<audio id="native-player"></audio>
 			</div>
