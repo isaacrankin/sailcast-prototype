@@ -7,6 +7,14 @@ var Player = function(options) {
 
 	'use strict';
 
+	/**
+	 * Validate audio url, check if client can play format
+	 *
+	 * @param mediaElement
+	 * @param src
+	 * @returns {boolean}
+	 * @private
+	 */
 	var _validateSrc = function(mediaElement, src){
 
 		if(typeof src !== 'string' || src === ''){
@@ -20,27 +28,45 @@ var Player = function(options) {
 		return (mediaElement.canPlayType(type) === '') ? false : true;
 	};
 
+	/**
+	 * Formats seconds to hours, minutes and seconds for use with hh:mm:ss format
+	 * Also returns duration as a percentage
+	 *
+	 * @param timeSeconds
+	 * @param duration
+	 * @returns {{seconds: Number, minutes: Number, hours: Number, percentage: number}}
+	 * @private
+	 */
+	var _formatTime = function(seconds, duration){
+		return {
+			seconds: parseInt( seconds % 60),
+			minutes: parseInt( (seconds/60) % 60),
+			hours: parseInt( (seconds/ (60*60)) % 24),
+			percentage: Math.round( (seconds / (duration/100)) * 100) / 100
+		};
+	};
+
+	/**
+	 * Compile values to be published by playback
+	 *
+	 * @param audioElement
+	 * @returns {{currentTime: *, duration: (duration|*), progressSeconds: Number, progressMinutes: Number, progressHours: Number, progressPercentage: Number, playerState: Number}}
+	 * @private
+	 */
 	var _playbackValues = function(audioElement){
 
-		var currentTime = audioElement.currentTime,
-			duration = audioElement.duration,
-			minutes = Math.floor( currentTime/60 );
+		var formattedTime = _formatTime(audioElement.currentTime, audioElement.duration);
 
-		// TODO: Return buffered as a %
-		if(audioElement.buffered.length === 1){
-//			console.log(audioElement.buffered.start(0));
-//			console.log(audioElement.buffered.end(0));
-		}
-
-		// TODO: format time correctly with leading zeros e.g. 00:00
+		// TODO: Return buffered audio data as a %
 
 		return {
-			currentTime: currentTime,
-			duration: duration,
-			minutes: minutes,
-			currentTimeSeconds: Math.round( currentTime ) - (minutes * 60),
-			currentTimeMinutes: Math.floor( (currentTime/60) ),
-			progress: Math.round( (currentTime / (duration/100)) * 100) / 100
+			currentTime: audioElement.currentTime,
+			duration: audioElement.duration,
+			progressSeconds: formattedTime.seconds,
+			progressMinutes: formattedTime.minutes,
+			progressHours: formattedTime.hours,
+			progressPercentage: formattedTime.percentage,
+			playerState: audioElement.readyState
 		};
 	};
 
@@ -51,11 +77,11 @@ var Player = function(options) {
 		},
 
 		playbackLoopInterval: {
-			value: 500
+			value: 1000
 		},
 
 		seekIncrement: {
-			value: 10
+			value: 20
 		},
 
 		state:{
@@ -77,6 +103,9 @@ var Player = function(options) {
 	// Define the properties
 	Object.defineProperties(this, properties);
 
+
+	//TODO: refactor loop with formal player events: https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
+
 	this.getReadyState = function(){
 		return this.audioElement.readyState;
 	};
@@ -84,6 +113,8 @@ var Player = function(options) {
 	this.playCallback = function(){
 
 		var self = this;
+
+		clearTimeout(this.playbackLoop);
 
 		this.playbackLoop = setTimeout(function(){
 
@@ -94,7 +125,7 @@ var Player = function(options) {
 
 			//TODO: Handle podcast finished playing - reset player or play next?
 
-			// Call itself
+			// Loop
 			self.playCallback();
 
 		}, this.playbackLoopInterval);
