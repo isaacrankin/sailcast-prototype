@@ -141,6 +141,9 @@ App.mediator.subscribe('seekToPercentage', function(arg){
 	}
 });
 
+// Feed related channels
+// ---------------------------------------------------
+
 // Load feeds channel
 App.mediator.subscribe('loadFeeds', function(arg){
 	feedView.clearFeedItems();
@@ -152,6 +155,7 @@ App.mediator.subscribe('viewFeed', function(arg){
 
 });
 
+// Load google feeds API
 google.load('feeds', '1');
 
 google.setOnLoadCallback(function(){
