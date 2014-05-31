@@ -47,6 +47,8 @@ var feeds = [
 	}
 ];
 
+// Declare models & views
+// ---------------------------------------------------
 var App = {
 	mediator: new Mediator()
 };
@@ -76,35 +78,36 @@ var headerView = new HeaderView({
 
 headerView.populateFeedMenu(feeds);
 
-// Play item channel
+// Player related channels
+// ---------------------------------------------------
+
+// Play item
 App.mediator.subscribe('playItem', function(arg){
 
-	//TODO: player state could be managed better - preventing re-render
-	var playerState = player.state;
+	var playItem = player.play(arg);
 
-	if(player.play(arg)){
+	playerView.renderItem(arg);
 
-		//TODO: show a loading state
-
-		if(playerState !== 'paused' ) {
-			playerView.renderItem(arg);
-		}
-
-		playerView.setState('loading');
-
-	}else{
-		window.alert('Cannot play podcast, invalid src.');
+	if(!playItem){
+		playerView.reset();
+		window.alert('ERROR: Cannot play podcast, invalid src.');
 	}
+
+});
+
+// Loading started
+App.mediator.subscribe('loadstart', function(e){
+	playerView.setState('loading');
 });
 
 // Playback loop
-App.mediator.subscribe('playback', function(arg){
+App.mediator.subscribe('timeupdate', function(arg){
 	playerView.updateScrubber(arg);
+});
 
-	// TODO: refactor so only player module reports player state
-	if(player.state === 'playing'){
-		playerView.setState('playing');
-	}
+// Media has began playing
+App.mediator.subscribe('playing', function(arg){
+	playerView.setState('playing');
 });
 
 // Stop item
@@ -121,7 +124,8 @@ App.mediator.subscribe('pauseItem', function(arg){
 
 // Mute channel
 App.mediator.subscribe('mute', function(arg){
-	player.mute();
+	player.mute(arg.mute);
+	playerView.toggleMute(arg.mute);
 });
 
 // Seek by an increment

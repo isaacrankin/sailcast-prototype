@@ -41,7 +41,7 @@ var PlayerView = function(options) {
 		},
 
 		$pauseBtn: {
-			value: $('.pause-btn', options.$el),
+			value: $('.pause-btn', options.$el)
 		},
 
 		$muteBtn: {
@@ -71,8 +71,12 @@ var PlayerView = function(options) {
 	};
 
 	this.renderItem = function(podcast){
-		$('.current-podcast h4', this.$el).html(podcast.title);
-		return this;
+		if(podcast){
+			$('.current-podcast h4', this.$el).html(podcast.title);
+			return this;
+		}else{
+			return false;
+		}
 	};
 
 	this.updateScrubber = function(data){
@@ -97,7 +101,24 @@ var PlayerView = function(options) {
 		this.setState('stopped');
 	};
 
+	this.toggleMute = function(mute){
+
+		if(mute === 'toggle'){
+			this.$muteBtn.toggleClass('icon-volume-off');
+			this.$muteBtn.toggleClass('icon-volume-up');
+		}else
+		if(mute){
+			this.$muteBtn.addClass('icon-volume-off');
+			this.$muteBtn.removeClass('icon-volume-up');
+		}else{
+			this.$muteBtn.removeClass('icon-volume-off');
+			this.$muteBtn.addClass('icon-volume-up');
+		}
+	};
+
 	this.events = function(){
+
+		var self = this;
 
 		this.$pauseBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
 			App.mediator.publish('pauseItem');
@@ -112,9 +133,9 @@ var PlayerView = function(options) {
 		});
 
 		this.$muteBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){
-			$(e.currentTarget).toggleClass('icon-volume-off');
-			$(e.currentTarget).toggleClass('icon-volume-up');
-			App.mediator.publish('mute');
+			App.mediator.publish('mute', {
+				mute: 'toggle'
+			});
 		});
 
 		this.$seekBackBtn.bind( (Modernizr.touch) ? 'touchend' : 'click', function(e){

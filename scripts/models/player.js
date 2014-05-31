@@ -63,6 +63,7 @@ var Player = function(options) {
 		return {
 			currentTime: audioElement.currentTime,
 			duration: audioElement.duration,
+			playerState: audioElement.readyState,
 			progress: {
 				seconds: progressTime.seconds,
 				minutes: progressTime.minutes,
@@ -74,8 +75,7 @@ var Player = function(options) {
 				minutes: negativeProgressTime.minutes,
 				hours: negativeProgressTime.hours,
 				percentage: negativeProgressTime.percentage
-			},
-			playerState: audioElement.readyState
+			}
 		};
 	};
 
@@ -112,9 +112,6 @@ var Player = function(options) {
 	// Define the properties
 	Object.defineProperties(this, properties);
 
-
-	//TODO: refactor loop with formal player events: https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
-
 	this.getReadyState = function(){
 		return this.audioElement.readyState;
 	};
@@ -122,11 +119,15 @@ var Player = function(options) {
 
 	this.play = function(podcast){
 
-		// Play the given podcast if valid
+		// Play the podcast if valid
 		if(typeof podcast === 'object' && _validateSrc(this.audioElement, podcast.src)){
 
 			this.audioElement.setAttribute('src', podcast.src);
-			this.audioElement.muted = false;
+
+			App.mediator.publish('mute', {
+				mute: false
+			});
+
 			this.audioElement.play();
 			this.currentItem = podcast;
 			this.state = 'playing';
@@ -134,7 +135,7 @@ var Player = function(options) {
 			return this;
 
 		// Try play a paused item
-		}else if(this.state === 'paused' && typeof this.currentItem !== 'undefined'){
+		}else if(this.audioElement.paused && typeof this.currentItem !== 'undefined'){
 
 			this.audioElement.play();
 			this.state = 'playing';
@@ -159,8 +160,12 @@ var Player = function(options) {
 		return this;
 	};
 
-	this.mute = function(){
-		this.audioElement.muted = (this.audioElement.muted) ? false : true;
+	this.mute = function(mute){
+		if(mute === 'toggle'){
+			this.audioElement.muted = (this.audioElement.muted) ? false : true;
+		}else{
+			this.audioElement.muted = mute;
+		}
 		return this;
 	};
 
@@ -186,9 +191,7 @@ var Player = function(options) {
 	};
 
 	/**
-	 * Listen for media events on audio element
-	 *
-	 * https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
+	 * Listen for media events on audio element and publish them
 	 */
 	this.mediaEvents = function(){
 
@@ -197,23 +200,29 @@ var Player = function(options) {
 
 			// Publish playback values
 			var playbackValues = _playbackValues(e.target);
-			App.mediator.publish('playback', playbackValues);
+			App.mediator.publish('timeupdate', playbackValues);
+
 		}, true);
 
 		// Download progress
 		this.audioElement.addEventListener('progress', function(e){
 
-//			console.log(e);
-
 		}, true);
 
 		// Error
 		this.audioElement.addEventListener('error', function(e){
-
-//			window.alert('Error playing audio.');
 			console.log(e);
-
 		}, true);
+
+		// Playing
+		this.audioElement.addEventListener('playing', function(e){
+			App.mediator.publish('playing');
+		});
+
+		// Loading started
+		this.audioElement.addEventListener('loadstart', function(e){
+			App.mediator.publish('loadstart');
+		});
 
 	};
 
