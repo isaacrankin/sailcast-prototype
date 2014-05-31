@@ -10,6 +10,17 @@ var PlayerView = function(options) {
 		return (val < 10) ? '0'+val : val;
 	};
 
+	var _updateTimer = function($el, data){
+
+		var hours = _leadingZero(data.hours),
+			minutes = _leadingZero(data.minutes),
+			seconds = _leadingZero(data.seconds);
+
+		$('.hours', $el).html(hours);
+		$('.minutes', $el).html(minutes);
+		$('.seconds', $el).html(seconds);
+	};
+
 	var properties = {
 
 		state: {
@@ -66,14 +77,10 @@ var PlayerView = function(options) {
 
 	this.updateScrubber = function(data){
 
-		var hours = _leadingZero(data.progressHours),
-			minutes = _leadingZero(data.progressMinutes),
-			seconds = _leadingZero(data.progressSeconds);
+		_updateTimer($('.timer.__progress'), data.progress);
+		_updateTimer($('.timer.__progress-negative'), data.negativeProgress);
 
-		$('.duration .hours', this.$scrubber).html( hours );
-		$('.duration .minutes', this.$scrubber).html( minutes );
-		$('.duration .seconds', this.$scrubber).html( seconds );
-		$('.progress', this.$scrubber).css('width', data.progressPercentage + '%');
+		$('.progress', this.$scrubber).css('width', data.progress.percentage + '%');
 	};
 
 	this.reset = function(){

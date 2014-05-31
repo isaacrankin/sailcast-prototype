@@ -50,22 +50,31 @@ var Player = function(options) {
 	 * Compile values to be published by playback
 	 *
 	 * @param audioElement
-	 * @returns {{currentTime: *, duration: (duration|*), progressSeconds: Number, progressMinutes: Number, progressHours: Number, progressPercentage: Number, playerState: Number}}
 	 * @private
 	 */
 	var _playbackValues = function(audioElement){
 
-		var formattedTime = _formatTime(audioElement.currentTime, audioElement.duration);
+		var progressTime = _formatTime(audioElement.currentTime, audioElement.duration),
+			negativeProgressTime = _formatTime((audioElement.duration - audioElement.currentTime), audioElement.duration);
+
 
 		// TODO: Return buffered audio data as a %
 
 		return {
 			currentTime: audioElement.currentTime,
 			duration: audioElement.duration,
-			progressSeconds: formattedTime.seconds,
-			progressMinutes: formattedTime.minutes,
-			progressHours: formattedTime.hours,
-			progressPercentage: formattedTime.percentage,
+			progress: {
+				seconds: progressTime.seconds,
+				minutes: progressTime.minutes,
+				hours: progressTime.hours,
+				percentage: progressTime.percentage
+			},
+			negativeProgress: {
+				seconds: negativeProgressTime.seconds,
+				minutes: negativeProgressTime.minutes,
+				hours: negativeProgressTime.hours,
+				percentage: negativeProgressTime.percentage
+			},
 			playerState: audioElement.readyState
 		};
 	};
@@ -183,20 +192,28 @@ var Player = function(options) {
 	 */
 	this.mediaEvents = function(){
 
-		// Playback look
-		this.audioElement.addEventListener('timeupdate', function(args) {
+		// Playback loop
+		this.audioElement.addEventListener('timeupdate', function(e) {
 
-			var playbackValues = _playbackValues(args.srcElement);
-
-			// Publish playback values, used by player view for scrubber etc.
+			// Publish playback values
+			var playbackValues = _playbackValues(e.target);
 			App.mediator.publish('playback', playbackValues);
+		}, true);
 
+		// Download progress
+		this.audioElement.addEventListener('progress', function(e){
+
+//			console.log(e);
 
 		}, true);
 
+		// Error
+		this.audioElement.addEventListener('error', function(e){
 
+//			window.alert('Error playing audio.');
+			console.log(e);
 
-
+		}, true);
 
 	};
 

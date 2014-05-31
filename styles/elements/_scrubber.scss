@@ -1,0 +1,40 @@
+.scrubber{
+	@include row();
+	width: 100%;
+	height: 24px;
+	position: relative;
+	background-color: rgb(93, 90, 88);
+	margin-bottom: 1em;
+	overflow: hidden;
+
+	&:hover{
+		cursor: pointer;
+	}
+
+	.timer{
+		position: relative;
+		z-index: 1;
+		line-height: 26px;
+		font-size: 0.8em;
+		margin: 0 0.5em;
+
+		&.__progress{
+			float: left;
+		}
+
+		&.__progress-negative{
+			float: right;
+		}
+	}
+
+	.progress,
+	.buffered{
+		width: 0;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: $colour-orange;
+		transition: width 0.1s;
+	}
+}
