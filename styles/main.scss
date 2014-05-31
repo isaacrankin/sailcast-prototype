@@ -20,6 +20,9 @@ $sprite-height: 400px;
 @import "partials/base";
 @import "partials/grid";
 
+// Mixins
+@import "partials/mixins";
+
 // Elements
 @import "elements/buttons";
 @import "elements/loading-graphic";
