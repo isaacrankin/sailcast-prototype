@@ -6,7 +6,7 @@ var DataManager = function(options){
 
 	var _supportsIndexedDB = function(){
 		return (window.indexedDB) ? true : false;
-	}
+	};
 
 	var properties = {
 

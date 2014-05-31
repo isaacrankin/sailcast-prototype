@@ -7,8 +7,8 @@
 		"scripts": ["vendor/jquery/dist/jquery.min.js"]
 	},
 	"workingFiles": {
-		"scripts": ["scripts/plugins.js",
-			"scripts/modules/*.js",
+		"scripts": [
+			"scripts/models/*.js",
 			"scripts/views/*.js",
 			"scripts/controller.js"]
 	}

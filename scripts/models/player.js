@@ -23,9 +23,9 @@ var Player = function(options) {
 
 		// find type of file by getting the file extension
 		var spl = src.split('.'),
-			type = 'audio/'+ spl[(spl.length - 1)];
+			extension = spl[(spl.length - 1)];
 
-		return (mediaElement.canPlayType(type) === '') ? false : true;
+		return (mediaElement.canPlayType('audio/'+ extension) === '') ? false : true;
 	};
 
 	/**
@@ -110,35 +110,6 @@ var Player = function(options) {
 		return this.audioElement.readyState;
 	};
 
-	this.playCallback = function(){
-
-		var self = this;
-
-		clearTimeout(this.playbackLoop);
-
-		this.playbackLoop = setTimeout(function(){
-
-			var playbackValues = _playbackValues(self.audioElement);
-
-			// Publish playback values, used by player view for scrubber etc.
-			App.mediator.publish('playback', playbackValues);
-
-			//TODO: Handle podcast finished playing - reset player or play next?
-
-			// Loop
-			self.playCallback();
-
-		}, this.playbackLoopInterval);
-	};
-
-	this.startPlaybackLoop = function(){
-		this.stopPlaybackLoop();
-		this.playCallback();
-	};
-
-	this.stopPlaybackLoop = function(){
-		clearTimeout(this.playbackLoop);
-	};
 
 	this.play = function(podcast){
 
@@ -148,7 +119,6 @@ var Player = function(options) {
 			this.audioElement.setAttribute('src', podcast.src);
 			this.audioElement.muted = false;
 			this.audioElement.play();
-			this.startPlaybackLoop();
 			this.currentItem = podcast;
 			this.state = 'playing';
 
@@ -158,7 +128,6 @@ var Player = function(options) {
 		}else if(this.state === 'paused' && typeof this.currentItem !== 'undefined'){
 
 			this.audioElement.play();
-			this.startPlaybackLoop();
 			this.state = 'playing';
 
 			return this;
@@ -169,7 +138,6 @@ var Player = function(options) {
 	};
 
 	this.pause = function(){
-		this.stopPlaybackLoop();
 		this.audioElement.pause();
 		this.state = 'paused';
 		return this;
@@ -178,7 +146,6 @@ var Player = function(options) {
 	this.stop = function(){
 		// Removing attribute value stops download of media
 		this.audioElement.setAttribute('src', '');
-		this.stopPlaybackLoop();
 		this.state = 'stopped';
 		return this;
 	};
@@ -208,4 +175,30 @@ var Player = function(options) {
 
 		return this.audioElement.currentTime;
 	};
+
+	/**
+	 * Listen for media events on audio element
+	 *
+	 * https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
+	 */
+	this.mediaEvents = function(){
+
+		// Playback look
+		this.audioElement.addEventListener('timeupdate', function(args) {
+
+			var playbackValues = _playbackValues(args.srcElement);
+
+			// Publish playback values, used by player view for scrubber etc.
+			App.mediator.publish('playback', playbackValues);
+
+
+		}, true);
+
+
+
+
+
+	};
+
+	this.mediaEvents();
 };
