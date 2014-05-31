@@ -1,0 +1,16 @@
+@mixin sprite($x: center, $y:0, $key: "sprite", $width: $sprite-width, $height: $sprite-height) {
+	background-image: url("../images/common/#{$key}.png");
+	background-repeat: no-repeat;
+	background-position: $x $y;
+	background-size: $width $height;
+
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+		background-image: url("../images/common/#{$key}-2x.png");
+	}
+}
+
+@mixin row{
+	width: 100%;
+	float: left;
+	clear: both;
+}

@@ -1,0 +1,20 @@
+.loading-bar{
+	width: 200%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 0;
+	color: #fff;
+	opacity: 0.4;
+	background: url('../images/modules/loading-bar.svg') repeat-x;
+	overflow: hidden;
+	animation: moveLoadingBars 0.3s linear infinite;
+	display: none;
+}
+
+@keyframes moveLoadingBars {
+	100% {
+		margin-left: -40px;
+	}
+}
