@@ -102,7 +102,7 @@ App.mediator.subscribe('playback', function(arg){
 	playerView.updateScrubber(arg);
 
 	// TODO: refactor so only player module reports player state
-	if(arg.playerState === 4 && playerView.state !== 'playing'){
+	if(player.state === 'playing'){
 		playerView.setState('playing');
 	}
 });
