@@ -7,7 +7,7 @@
   "scripts": {
     "test": "grunt"
   },
-  "repository": "",
+  "repository": "https://github.com/isaacwebfix/sailcast",
   "author": {
     "name": "Isaac Rankin",
     "url": "http://isaacrankin.com"

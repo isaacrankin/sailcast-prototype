@@ -11,6 +11,5 @@
 
 # TECHNOLOGY COLOPHON
 
-    HTML5, CSS3
-    Normalize.css, jQuery, Modernizr
-    Google Feeds API
+    HTML5, CSS3, JavaScript
+    Normalize.css, jQuery, Modernizr, Google Feeds API
