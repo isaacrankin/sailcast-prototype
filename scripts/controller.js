@@ -44,6 +44,10 @@ var feeds = [
 	{
 		name: 'Hanselminutes',
 		url: 'http://feeds.feedburner.com/HanselminutesCompleteMP3?format=xml'
+	},
+	{
+		name: 'The Loosly Coupled Podcast',
+		url: 'http://feeds.feedburner.com/looselycoupled-podcast'
 	}
 ];
 
