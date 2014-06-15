@@ -111,6 +111,7 @@ App.mediator.subscribe('timeupdate', function(arg){
 
 // Media has began playing
 App.mediator.subscribe('playing', function(arg){
+	console.log('playing');
 	playerView.setState('playing');
 });
 
@@ -141,6 +142,7 @@ App.mediator.subscribe('seekIncrement', function(arg){
 
 App.mediator.subscribe('seekToPercentage', function(arg){
 	if(player.getReadyState() > 0){
+		playerView.setState('loading');
 		player.seekToPercentage(arg.percentage);
 	}
 });

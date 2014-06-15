@@ -161,6 +161,7 @@ var PlayerView = function(options) {
 			App.mediator.publish('seekToPercentage',{
 				percentage: dist / ($(e.currentTarget).width()/100)
 			});
+
 		});
 
 		return this;
