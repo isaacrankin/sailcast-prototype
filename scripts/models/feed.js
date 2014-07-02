@@ -5,51 +5,42 @@ var Feed = function(){
 	'use strict';
 
 	var properties = {
-
 		feedItems: {
 			value: [],
 			writable: true,
 			enumerable: true
-		},
-
-		loadFeeds: {
-
-			value: function(feeds, format){
-
-				var result,
-					self = this;
-
-				var _createFeed = function(result){
-
-					if (!result.error && result.status.code === 200) {
-						self.processFeed(result);
-						return true;
-					}else{
-						console.error('Failed to load feed', result);
-						return false;
-					}
-				};
-
-				for (var i = 0; i < feeds.length; i++) {
-
-					var feed = new google.feeds.Feed(feeds[i].url);
-
-					if(format === 'xml'){
-						feed.setResultFormat(google.feeds.Feed.XML_FORMAT);
-					}
-
-					feed.load(_createFeed, result);
-				}
-
-				return this;
-			},
-
-			enumerable: true
-		},
-
+		}
 	};
 
 	Object.defineProperties(this, properties);
+
+	this.loadFeeds = function(feeds, format) {
+
+		var result,
+			self = this;
+
+		var callback = function(result){
+			if (!result.error && result.status.code === 200) {
+				self.processFeed(result);
+				return true;
+			}else{
+				console.error('Failed to load feed', result);
+				return false;
+			}
+		};
+
+		for (var i = 0; i < feeds.length; i++) {
+			var feed = new google.feeds.Feed(feeds[i].url);
+
+			if(format === 'xml'){
+				feed.setResultFormat(google.feeds.Feed.XML_FORMAT);
+			}
+
+			feed.load(callback, result);
+		}
+
+		return this;
+	};
 
 	this.findImage = function(nodes){
 		var image = '';
@@ -63,6 +54,7 @@ var Feed = function(){
 		return image;
 	};
 
+	// TODO: Re-write this method based on some kind of RSS & Atom feed standard
 	this.processFeed = function(data){
 
 		/**
@@ -93,7 +85,7 @@ var Feed = function(){
 
 		// Create feed container
 		var feedID = 1;
-		var $feedContainer = $('<div id="'+ feedID +'" class="feed-items"></div>').appendTo('#feed');
+		var $feedsContainer = $('<div id="'+ feedID +'" class="feed-items"></div>').appendTo('#feed .inner');
 
 
 		 // Loop through and create feed items
@@ -109,16 +101,20 @@ var Feed = function(){
 				entryImage = defaults.image;
 			}
 
-			feedItems[i] = new FeedItem({
-				title: entryTitle,
-				enclosure: entryEnclosure,
-				image: entryImage,
-				src: (entryEnclosure) ? entryEnclosure.getAttribute('url') : '',
-				publishDate: entryPublishDate
-			}).render($feedContainer);
+			// Publish new feed item
+			App.mediator.publish('newFeedItem', {
+				$feedsContainer: $feedsContainer,
+				feeditem: {
+					title: entryTitle,
+					enclosure: entryEnclosure,
+					image: entryImage,
+					src: (entryEnclosure) ? entryEnclosure.getAttribute('url') : '',
+					publishDate: entryPublishDate
+				}
+			});
+
 		}
 
 		return feedItems;
-
 	};
 };

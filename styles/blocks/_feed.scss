@@ -3,6 +3,11 @@
 	margin: 0 auto;
 	max-width: 800px;
 	box-sizing: border-box;
+
+	.inner{
+		float: left;
+		padding-bottom: 200px;
+	}
 }
 
 .feed-item{

@@ -40,6 +40,10 @@ var FeedItem = function(options){
 
 				this.$feedsContainer = $container;
 
+
+				console.log($('#feed-item-template'));
+
+
 				this.$el = $('<div class="feed-item"><img class="poster" src="'+ this.image + '" /><div class="title"><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></div><button class="play-btn icon-play" data-audio-src="'+ this.src +'"><span class="label">play</span></button></div>').appendTo(this.$feedsContainer);
 
 				this.events(this.$el, this.title);

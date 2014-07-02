@@ -9,7 +9,8 @@ FeedView:false,
 HeaderView:false,
 PlayerView:false,
 FeedManager:false,
-DataManager:false */
+DataManager:false,
+ FeedItem:false */
 
 'use strict';
 
@@ -17,6 +18,10 @@ DataManager:false */
 
 // Hardcoded feeds are temporary
 var feeds = [
+	{
+		name: 'Master',
+		url: 'http://pipes.yahoo.com/pipes/pipe.run?_id=4e003c6106bd03c548aaffe7448ca829&_render=rss'
+	},
 	{
 		name: '5by5',
 		url: 'http://5by5.tv/rss'
@@ -156,12 +161,30 @@ App.mediator.subscribe('loadFeeds', function(arg){
 	feed.loadFeeds(feeds, 'xml');
 });
 
+// Create a new feed item
+App.mediator.subscribe('newFeedItem', function(arg){
+
+	// Create
+	var feedItem = new FeedItem({
+		title:          arg.feeditem.title,
+		enclosure:      arg.feeditem.enclosure,
+		image:          arg.feeditem.image,
+		src:            arg.feeditem.src,
+		publishDate:    arg.feeditem.publishDate
+	}).render(arg.$feedsContainer);
+
+	// Save
+	feed.feedItems.push(feedItem);
+
+});
+
 // Change the current feed
 App.mediator.subscribe('viewFeed', function(arg){
 
 });
 
 // Load google feeds API
+// ---------------------------------------------------
 google.load('feeds', '1');
 
 google.setOnLoadCallback(function(){
