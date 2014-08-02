@@ -30,10 +30,6 @@ var FeedItemView = function(options){
 			value: options.image
 		},
 
-		src: {
-			value: options.src
-		},
-
 		template: {
 			value: document.querySelector('#feed-item-template')
 		},
@@ -44,11 +40,13 @@ var FeedItemView = function(options){
 
 				var item = this.template;
 
+				//TODO: If enclosure note valid - render with broken state?
+
 				item.content.querySelector('img.poster').src = this.image;
 				item.content.querySelector('.title').innerText = this.title;
 				item.content.querySelector('.date').innerText = this.publishDate;
-				item.content.querySelector('.play-btn').setAttribute('data-audio-src', this.src);
-				item.content.querySelector('.podcast-src').setAttribute('href', this.src);
+				item.content.querySelector('.play-btn').setAttribute('data-audio-src', this.enclosure.url);
+				item.content.querySelector('.podcast-src').setAttribute('href', this.enclosure.url);
 
 				var clone = document.importNode(item.content, true);
 
@@ -77,7 +75,6 @@ var FeedItemView = function(options){
 			});
 		});
 
-
 		$('.poster', $el).bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
 
 			var audioSource = $(e.currentTarget).data('audio-src');
@@ -88,7 +85,6 @@ var FeedItemView = function(options){
 				src: audioSource
 			});
 		});
-
 
 		return $el;
 	};

@@ -1,90 +1,56 @@
-// /* global App:false */
-//
-// /**
-//  * A single feed item
-//  */
-// var FeedItem = function(options){
-//
-// 	'use strict';
-//
-// 	var properties = {
-//
-// 		$el: {
-// 			value: undefined,
-// 			writable: true
-// 		},
-//
-// 		title: {
-// 			value: options.title
-// 		},
-//
-// 		publishDate: {
-// 			value: options.publishDate
-// 		},
-//
-// 		enclosure: {
-// 			value: options.enclosure
-// 		},
-//
-// 		image: {
-// 			value: options.image
-// 		},
-//
-// 		src: {
-// 			value: options.src
-// 		},
-//
-// 		render: {
-//
-// 			value: function($container){
-//
-// 				this.$feedsContainer = $container;
-//
-//
-// 				console.log($('#feed-item-template'));
-//
-//
-// 				this.$el = $('<div class="feed-item"><img class="poster" src="'+ this.image + '" /><div class="title"><h4>' + this.title + '</h4><h5>' + this.publishDate + '</h5></div><button class="play-btn icon-play" data-audio-src="'+ this.src +'"><span class="label">play</span></button></div>').appendTo(this.$feedsContainer);
-//
-// 				this.events(this.$el, this.title);
-//
-// 				return this;
-// 			}
-// 		}
-// 	};
-//
-// 	// Define the properties
-// 	Object.defineProperties(this, properties);
-//
-// 	this.events = function($el, title){
-//
-// 		$('.play-btn', $el).click(function(e){
-//
-// 			var audioSource = $(e.currentTarget).data('audio-src');
-//
-// 			// Publish to playItem channel
-// 			App.mediator.publish('playItem', {
-// 				title: title,
-// 				src: audioSource
-// 			});
-// 		});
-//
-//
-// 		$('.poster', $el).bind( (Modernizr.touch) ? 'touchstart' : 'click', function(e){
-//
-// 			var audioSource = $(e.currentTarget).data('audio-src');
-//
-// 			// Publish to playItem channel
-// 			App.mediator.publish('playItem', {
-// 				title: title,
-// 				src: audioSource
-// 			});
-//
-// 		});
-//
-//
-// 		return $el;
-// 	};
-//
-// 	return this;
-// };
+/* global App:false */
+
+var FeedItem = function(options){
+
+	'use strict';
+
+	/**
+	 * Podcast fields required
+	 *
+	 * All fields are required unless otherwise specified
+	 *
+	 * title
+	 * link
+	 * pubDate
+	 * imageURL
+	 * audioURL
+	 * author (optional)
+	 * guid (optional)
+	 *
+	 * These feilds are informed by the Itunes RSS spec for podcasts:
+	 * https://www.apple.com/au/itunes/podcasts/specs.html#rss
+	 */
+
+	var properties = {
+
+		$el: {
+			value: undefined,
+			writable: true
+		},
+
+		title: {
+			value: options.title
+		},
+
+		pubDate: {
+			value: options.publishDate
+		},
+
+		enclosure: {
+			value: options.enclosure
+		},
+
+		image: {
+			value: options.image
+		},
+
+		src: {
+			value: options.src
+		}
+	};
+
+	// Define the properties
+	Object.defineProperties(this, properties);
+
+	return this;
+};

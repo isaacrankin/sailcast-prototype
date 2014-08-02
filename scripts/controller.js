@@ -53,6 +53,14 @@ var feeds = [
 	{
 		name: 'The Loosly Coupled Podcast',
 		url: 'http://feeds.feedburner.com/looselycoupled-podcast'
+	},
+	{
+		name: 'RNZ: Saturday Morning',
+		url: 'http://www.radionz.co.nz/podcasts/saturday.rss'
+	},
+	{
+		name: 'Software Engineering Radio',
+		url: 'http://feeds.feedburner.com/se-radio'
 	}
 ];
 
@@ -101,7 +109,6 @@ App.mediator.subscribe('playItem', function(arg){
 		playerView.reset();
 		window.alert('ERROR: Cannot play podcast, invalid src.');
 	}
-
 });
 
 // Loading started
