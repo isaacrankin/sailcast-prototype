@@ -14,7 +14,7 @@
 		<script src="scripts/vendor/modernizr.min.js"></script>
 	</head>
 	<body>
-		<!--[if lt IE 8]>
+		<!--[if lt IE 9>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 		<header id="primary-header">
@@ -70,11 +70,11 @@
 
 		<template id="feed-item-template">
 			<div class="feed-item">
-				<img class="poster" src="" alt="">
-				<div class="title">
-					<h4>[podcast title]</h4>
-					<h5>[podcast date]</h5>
-					<a href="#">Go to podcast</a>
+				<img class="poster" src="" alt="" width="" height="" />
+				<div class="title-group">
+					<h4 class="title">[podcast title]</h4>
+					<h5 class="date">[podcast date]</h5>
+					<a class="podcast-src" href="#">podcast source</a>
 				</div>
 				<button class="play-btn icon-play" data-audio-src="">
 					<span class="label">play</span>

@@ -10,7 +10,7 @@ HeaderView:false,
 PlayerView:false,
 FeedManager:false,
 DataManager:false,
- FeedItem:false */
+FeedItemView:false */
 
 'use strict';
 
@@ -165,7 +165,7 @@ App.mediator.subscribe('loadFeeds', function(arg){
 App.mediator.subscribe('newFeedItem', function(arg){
 
 	// Create
-	var feedItem = new FeedItem({
+	var feedItem = new FeedItemView({
 		title:          arg.feeditem.title,
 		enclosure:      arg.feeditem.enclosure,
 		image:          arg.feeditem.image,
