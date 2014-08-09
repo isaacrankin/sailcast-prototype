@@ -169,7 +169,7 @@ App.mediator.subscribe('loadFeeds', function(arg){
 });
 
 // Create a new feed item
-App.mediator.subscribe('newFeedItem', function(arg){
+App.mediator.subscribe('newFeedItem', function(arg) {
 
 	// Create
 	var feedItem = new FeedItemView({
@@ -178,7 +178,7 @@ App.mediator.subscribe('newFeedItem', function(arg){
 		image:          arg.feeditem.image,
 		src:            arg.feeditem.src,
 		publishDate:    arg.feeditem.publishDate
-	}).render(arg.$feedsContainer);
+	}).render(arg.$feedContainer);
 
 	// Save
 	feed.feedItems.push(feedItem);

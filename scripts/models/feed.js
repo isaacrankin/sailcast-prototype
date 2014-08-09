@@ -47,16 +47,16 @@ var Feed = function(){
 	 * @param  {xml node} entry
 	 * @return {string}
 	 */
-	var _getEnclosure = function(entry){
-
-		var encolsure = entry.getElementsByTagName('enclosure')[0];
+	var _getEnclosure = function(encolsure){
 
 		if(encolsure){
+
 			return {
 				url: encolsure.getAttribute('url'),
 				length: encolsure.getAttribute('length'),
 				type: encolsure.getAttribute('type')
-			}
+			};
+
 		}else{
 			return null;
 		}
@@ -72,6 +72,10 @@ var Feed = function(){
 		return entry.getElementsByTagName('pubDate')[0].innerHTML;
 	};
 
+	var _getShowNotes = function(entry){
+		return '';
+	};
+
 	/**
 	 * Get the feed ID by mutating the title
 	 *
@@ -80,7 +84,7 @@ var Feed = function(){
 	 */
 	var _getFeedID = function(channel){
 		var feedTitle = channel[0].getElementsByTagName('title')[0].innerHTML;
-		return feedTitle.toLowerCase().replace(/[|&;:$%@"<>()+,]/g, "").replace(/ /g, '-');
+		return feedTitle.toLowerCase().replace(/[|&;:$%@"<>()+,]/g, '').replace(/ /g, '-');
 	};
 
 	/**
@@ -92,9 +96,9 @@ var Feed = function(){
 	 */
 	var _processFeed = function(data){
 
-		var entries = data.xmlDocument.getElementsByTagName('item'),
+		var channel = data.xmlDocument.getElementsByTagName('channel'),
+			entries = data.xmlDocument.getElementsByTagName('item'),
 			entriesLength = entries.length,
-			channel = data.xmlDocument.getElementsByTagName('channel'),
 			feedItems = [],
 
 			// Create feed ID
@@ -102,27 +106,45 @@ var Feed = function(){
 
 			//TODO: Convert to using a <template>
 			//TODO: pass in parent element?
-			$feedsContainer = $('<div id="'+ feedID +'" class="feed-items"></div>').appendTo('#feed .inner');
+			$feedContainer = $('<div id="'+ feedID +'" class="feed-items"></div>').appendTo('#feed .inner');
+
 
 		 // Loop through and create feed items
 		for (var i = 0; i < entriesLength; i++) {
 
-			//TODO: New Feeditem?
-			var entry 		= entries[i],
-				title 		= _getTitle(entry),
-				enclosure 	= _getEnclosure(entry),
-				image 		= _getImage(entry),
-				pubDate 	= _getPubDate(entry);
+			var podcast = {};
+
+			$(entries[i].childNodes).each(function(index, item){
+
+				switch(item.nodeName){
+
+					case 'title':
+						podcast.title = $(item).text();
+					break;
+
+					case 'pubDate':
+						podcast.publishDate = $(item).text();
+					break;
+
+					case 'enclosure':
+						podcast.enclosure = {
+							url: item.getAttribute('url'),
+							length: item.getAttribute('length'),
+							type: item.getAttribute('type')
+						}
+					break;
+
+					case 'itunes:image':
+						podcast.image = $(item)[0].getAttribute('href')
+					break;
+				};
+
+			});
 
 			// Publish new feed item
 			App.mediator.publish('newFeedItem', {
-				$feedsContainer: $feedsContainer,
-				feeditem: {
-					title: title,
-					enclosure: enclosure,
-					image: image,
-					publishDate: pubDate
-				}
+				$feedContainer: $feedContainer,
+				feeditem: podcast
 			});
 		}
 
