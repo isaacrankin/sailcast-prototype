@@ -252,7 +252,18 @@ module.exports = function(grunt) {
 				run: true,
 				log: true
 			}
-		}
+		},
+
+		strip_code: {
+		    options: {
+		      start_comment: "test-code",
+		      end_comment: "end-test-code",
+		    },
+		    your_target: {
+		      // a list of files you want to strip code from
+		      src: "<%= config.workingPath %>/scripts/**/*.js"
+		    }
+		  }
 	});
 
 	// Default task for production
@@ -265,6 +276,7 @@ module.exports = function(grunt) {
 			'cssmin',
 			'autoprefixer',
 			'uglify:modernizr',
+			'strip_code',
 			'uglify:main',
 			'concat:vendor',
 			'imagemin',

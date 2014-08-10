@@ -57,7 +57,6 @@ var Player = function(options) {
 		var progressTime = _formatTime(audioElement.currentTime, audioElement.duration),
 			negativeProgressTime = _formatTime((audioElement.duration - audioElement.currentTime), audioElement.duration);
 
-
 		// TODO: Return buffered audio data as a %
 
 		return {
@@ -115,7 +114,6 @@ var Player = function(options) {
 	this.getReadyState = function(){
 		return this.audioElement.readyState;
 	};
-
 
 	this.play = function(podcast){
 
@@ -227,4 +225,12 @@ var Player = function(options) {
 	};
 
 	this.mediaEvents();
+
+	/* test-code */
+	this.__tests__ = {
+		_formatTime: _formatTime,
+		_validateSrc: _validateSrc
+	};
+	/* end-test-code */
+
 };

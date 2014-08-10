@@ -13,70 +13,6 @@ var Feed = function(){
 	};
 
 	/**
-	 * Get podcast image
-	 *
-	 * @param  {xml node} entry
-	 * @return {string}
-	 */
-	var _getImage = function(entry){
-
-		var image = '';
-
-		$(entry.childNodes).each(function(index, item){
-			if($(item)[0].nodeName === 'itunes:image'){
-				image = $(item)[0].getAttribute('href');
-			}
-		});
-
-		return image;
-	};
-
-	/**
-	 * Get podcast title
-	 *
-	 * @param  {xml node} entry
-	 * @return {string}
-	 */
-	var _getTitle = function(entry){
-		return entry.getElementsByTagName('title')[0].innerHTML;
-	};
-
-	/**
-	 * Get podcast enclosure/media
-	 *
-	 * @param  {xml node} entry
-	 * @return {string}
-	 */
-	var _getEnclosure = function(encolsure){
-
-		if(encolsure){
-
-			return {
-				url: encolsure.getAttribute('url'),
-				length: encolsure.getAttribute('length'),
-				type: encolsure.getAttribute('type')
-			};
-
-		}else{
-			return null;
-		}
-	};
-
-	/**
-	 * Get podcast publication date
-	 *
-	 * @param  {xml node} entry
-	 * @return {string}
-	 */
-	var _getPubDate = function(entry){
-		return entry.getElementsByTagName('pubDate')[0].innerHTML;
-	};
-
-	var _getShowNotes = function(entry){
-		return '';
-	};
-
-	/**
 	 * Get the feed ID by mutating the title
 	 *
 	 * @param  {xml node} channel
@@ -85,6 +21,45 @@ var Feed = function(){
 	var _getFeedID = function(channel){
 		var feedTitle = channel[0].getElementsByTagName('title')[0].innerHTML;
 		return feedTitle.toLowerCase().replace(/[|&;:$%@"<>()+,]/g, '').replace(/ /g, '-');
+	};
+
+	/**
+	 * Get all podcast properties from XML node
+	 *
+	 * @param  {[type]} entry The podcast XML node
+	 * @return {[type]}       All of the podcast properties
+	 */
+	var _createPodcast = function(entry){
+
+		var podcast = {};
+
+		$(entry.childNodes).each(function(index, item){
+
+			switch(item.nodeName){
+
+				case 'title':
+					podcast.title = $(item).text();
+				break;
+
+				case 'pubDate':
+					podcast.publishDate = $(item).text();
+				break;
+
+				case 'enclosure':
+					podcast.enclosure = {
+						url: item.getAttribute('url'),
+						length: item.getAttribute('length'),
+						type: item.getAttribute('type')
+					};
+				break;
+
+				case 'itunes:image':
+					podcast.image = $(item)[0].getAttribute('href');
+				break;
+			}
+		});
+
+		return podcast;
 	};
 
 	/**
@@ -108,38 +83,10 @@ var Feed = function(){
 			//TODO: pass in parent element?
 			$feedContainer = $('<div id="'+ feedID +'" class="feed-items"></div>').appendTo('#feed .inner');
 
-
 		 // Loop through and create feed items
 		for (var i = 0; i < entriesLength; i++) {
 
-			var podcast = {};
-
-			$(entries[i].childNodes).each(function(index, item){
-
-				switch(item.nodeName){
-
-					case 'title':
-						podcast.title = $(item).text();
-					break;
-
-					case 'pubDate':
-						podcast.publishDate = $(item).text();
-					break;
-
-					case 'enclosure':
-						podcast.enclosure = {
-							url: item.getAttribute('url'),
-							length: item.getAttribute('length'),
-							type: item.getAttribute('type')
-						}
-					break;
-
-					case 'itunes:image':
-						podcast.image = $(item)[0].getAttribute('href')
-					break;
-				};
-
-			});
+			var podcast = _createPodcast(entries[i]);
 
 			// Publish new feed item
 			App.mediator.publish('newFeedItem', {

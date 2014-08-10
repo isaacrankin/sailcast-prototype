@@ -12,13 +12,21 @@ var PlayerView = function(options) {
 
 	var _updateTimer = function($el, data){
 
-		var hours = _leadingZero(data.hours),
+		if(typeof data === 'object' && $el.length === 1){
+
+			var hours = _leadingZero(data.hours),
 			minutes = _leadingZero(data.minutes),
 			seconds = _leadingZero(data.seconds);
 
-		$('.hours', $el).html(hours);
-		$('.minutes', $el).html(minutes);
-		$('.seconds', $el).html(seconds);
+			$('.hours', $el).html(hours);
+			$('.minutes', $el).html(minutes);
+			$('.seconds', $el).html(seconds);
+
+			return hours + ':' + minutes + ':'  + seconds;
+		}else{
+			return null;
+		}
+
 	};
 
 	var properties = {
@@ -90,10 +98,18 @@ var PlayerView = function(options) {
 	this.reset = function(){
 
 		this.updateScrubber({
-			progressHours: 0,
-			progressMinutes: 0,
-			progressSeconds: 0,
-			progressPercentage: 0
+			progress: {
+				seconds: 0,
+				minutes: 0,
+				hours: 0,
+				percentage: 0
+			},
+			negativeProgress: {
+				seconds: 0,
+				minutes: 0,
+				hours: 0,
+				percentage: 0
+			}
 		});
 
 		$('.current-podcast h4', this.$el).empty();
