@@ -56,10 +56,7 @@ var Feed = function(){
 				case 'itunes:image':
 					newItem.image = $(item)[0].getAttribute('href');
 				break;
-
-				case 'media:content':
-					newItem.image = $(item)[0].getAttribute('url');
-				break;
+				
 			}
 		});
 
