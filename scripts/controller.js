@@ -44,7 +44,7 @@ var feeds = [
 	},
 	{
 		name: 'The Gaurdian - Techweekly',
-		url: 'http://www.theguardian.com/technology/series/techweekly/rss'
+		url: 'http://www.theguardian.com/technology/series/techweekly/podcast.xml'
 	},
 	{
 		name: 'Hanselminutes',

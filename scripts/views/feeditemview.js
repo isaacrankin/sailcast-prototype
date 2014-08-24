@@ -43,8 +43,8 @@ var FeedItemView = function(options){
 				var item = this.template;
 
 				//TODO: If enclosure note valid - render with broken state or don't render at all?
+				if(typeof this.enclosure !== 'undefined' && this.enclosure.url){
 
-				if(this.enclosure.url !== null){
 					item.content.querySelector('img.poster').src = this.image;
 					item.content.querySelector('.title').innerText = this.title;
 					item.content.querySelector('.date').innerText = this.publishDate;

@@ -29,24 +29,24 @@ var Feed = function(){
 	 * @param  {[type]} entry The podcast XML node
 	 * @return {[type]}       All of the podcast properties
 	 */
-	var _createPodcast = function(entry){
+	var _getItemValues = function(entry){
 
-		var podcast = {};
+		var newItem = {};
 
 		$(entry.childNodes).each(function(index, item){
 
 			switch(item.nodeName){
 
 				case 'title':
-					podcast.title = $(item).text();
+					newItem.title = $(item).text();
 				break;
 
 				case 'pubDate':
-					podcast.publishDate = $(item).text();
+					newItem.publishDate = $(item).text();
 				break;
 
 				case 'enclosure':
-					podcast.enclosure = {
+					newItem.enclosure = {
 						url: item.getAttribute('url'),
 						length: item.getAttribute('length'),
 						type: item.getAttribute('type')
@@ -54,12 +54,16 @@ var Feed = function(){
 				break;
 
 				case 'itunes:image':
-					podcast.image = $(item)[0].getAttribute('href');
+					newItem.image = $(item)[0].getAttribute('href');
+				break;
+
+				case 'media:content':
+					newItem.image = $(item)[0].getAttribute('url');
 				break;
 			}
 		});
 
-		return podcast;
+		return newItem;
 	};
 
 	/**
@@ -83,10 +87,15 @@ var Feed = function(){
 			//TODO: pass in parent element?
 			$feedContainer = $('<div id="'+ feedID +'" class="feed-items"></div>').appendTo('#feed .inner');
 
+		var channelDefaults = _getItemValues(channel[0]);
+
 		 // Loop through and create feed items
 		for (var i = 0; i < entriesLength; i++) {
 
-			var podcast = _createPodcast(entries[i]);
+			var podcastValues = _getItemValues(entries[i]);
+
+			// Merge podcast values into channel defaults
+			var podcast = $.extend(channelDefaults, podcastValues);
 
 			// Publish new feed item
 			App.mediator.publish('newFeedItem', {
