@@ -19,8 +19,16 @@ FeedItemView:false */
 // Hardcoded feeds are temporary
 var feeds = [
 	{
-		name: 'Master',
-		url: 'http://pipes.yahoo.com/pipes/pipe.run?_id=4e003c6106bd03c548aaffe7448ca829&_render=rss'
+		name: 'Webplatform Podcast',
+		url: 'http://thewebplatform.libsyn.com/rss'
+	},
+	{
+		name: 'JavaScript Jabber',
+		url: 'http://feeds.feedwrench.com/JavaScriptJabber.rss'
+	},
+	{
+		name: 'The Freelancer Show',
+		url: 'http://feeds.feedwrench.com/TheFreelancersShow.rss'
 	},
 	{
 		name: '5by5',
