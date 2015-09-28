@@ -1,4 +1,4 @@
-## This project is currently a prototype!
+## This project is a prototype
 
 ---
 
@@ -13,7 +13,7 @@ Demo [http://sailcast.isaacrankin.com](http://sailcast.isaacrankin.com)
 
 ## Project Goals
 - Demonstrate native HTML5 technologies
-- Experiment ECMAScript 6 features
+- Experiment with ECMAScript 6 features
 - Support the latest versions of Chrome, Firefox, Safari and IE
 - Minimal dependencies
 - Keep it lightweight and easy to deploy!
